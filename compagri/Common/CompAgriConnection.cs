@@ -25,6 +25,9 @@ namespace CompAgri.Common
         public virtual DbSet<Relation> Relations { get; set; }
         public virtual DbSet<Term> Terms { get; set; }
         public virtual DbSet<XmlFile> XmlFiles { get; set; }
+        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<UserProfile> UserProfile { get; set; }
+        public virtual DbSet<UserProfilePermission> UserProfilePermission { get; set; }
 
     }
 }
