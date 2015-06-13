@@ -89,6 +89,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CompAgriModel.edmx.sql" />
     <Content Include="ConnectionAmountLimitation.view.create..sql" />
     <Content Include="ConnectionClimateLimitation.view.create..sql" />
     <Content Include="ConnectionMeasuramentUnit.view.create..sql" />
@@ -125,6 +126,7 @@
     <Compile Include="Bll\CompAgriBll.cs" />
     <Compile Include="Common\CompAgriConnection.cs" />
     <Compile Include="Common\DataHelper.cs" />
+    <Compile Include="Common\WebApiAuthorizeFilter.cs" />
     <Compile Include="CompAgriModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -145,11 +147,15 @@
     </Compile>
     <Compile Include="Controllers\CompAgriConnectionsController.cs" />
     <Compile Include="Controllers\CompAgriController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UploadXmlController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Misc\CheckList.cs" />
+    <Compile Include="Models\Authentication\UserDto.cs" />
+    <Compile Include="Models\Authentication\UserProfileDto.cs" />
+    <Compile Include="Models\Authentication\UserProfilePermissionDto.cs" />
     <Compile Include="Models\TermDetails.cs" />
     <Compile Include="Models\Terms\Connection.cs" />
     <Compile Include="Models\Terms\DatabaseTable.cs" />
@@ -177,6 +183,15 @@
     </Compile>
     <Compile Include="UploadXmlFile.aspx.designer.cs">
       <DependentUpon>UploadXmlFile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="User.cs">
+      <DependentUpon>CompAgriModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserProfile.cs">
+      <DependentUpon>CompAgriModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserProfilePermission.cs">
+      <DependentUpon>CompAgriModel.tt</DependentUpon>
     </Compile>
     <Compile Include="XmlFile.cs">
       <DependentUpon>CompAgriModel.tt</DependentUpon>
