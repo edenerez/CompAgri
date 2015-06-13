@@ -31,5 +31,8 @@ namespace CompAgri
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Term> Term { get; set; }
         public virtual DbSet<XmlFile> XmlFile { get; set; }
+        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<UserProfile> UserProfile { get; set; }
+        public virtual DbSet<UserProfilePermission> UserProfilePermission { get; set; }
     }
 }
