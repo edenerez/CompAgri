@@ -6,7 +6,7 @@
     var links = []; // links cache
 
     angular
-        .module('demoApp', ['ui.tree', 'ui.bootstrap'])
+        .module('demoApp', ['ui.tree', 'ui.bootstrap', 'ng-context-menu'])
         .factory('treeServer', function ($http, $q) {
 
             return {
@@ -77,7 +77,14 @@
                         }).then(resolve, reject);
                     });
                 },
-
+                deleteConnection: function deleteConnection(id) {
+                    var self = this;
+                    return $q(function (resolve, reject) {
+                        $http.post(self.apiLocation + "Connections/Delete", id).then(function (res) {
+                            return res.data;
+                        }).then(resolve, reject);
+                    });
+                },
                 getConnectionsForTerms: function getConnectionsForTerms(termIds) {
                     var self = this;
                     return $q(function (resolve, reject) {
@@ -201,7 +208,7 @@
             };
         })
 
-        .controller('MainCtrl', function ($scope, $modal, treeServer, $q) {
+        .controller('MainCtrl', function ($scope, $modal, treeServer, $q, $compile) {
 
             $scope.tabsets = [{
                 id: 'left'
@@ -209,17 +216,28 @@
                 id: 'right'
             }];
 
+            $scope.deleteConnection = function (id) {
+                //deleting connexion by seting the isDelete column to true
+               
+                treeServer.deleteConnection(id).then(function () {
+                    removeLink(id);
+                    $scope.redrawLines();
+                    $scope.resetConnecting();
+                });
+                      
+            };
             $scope.treeServer = treeServer;
 
             treeServer.getTrees().then(function (trees) {
-
                 $scope.trees = trees;
+       
             }).then(function () {
                 return treeServer.getTree($scope.trees[0].id);
             }).then(function (tree) {
                 $scope.trees[0].list = [tree];
 
                 $scope._leftTree = $scope._rightTree = $scope.trees[0].id;
+
 
                 var remove = function (scope) {
                     // deleting the node in the server first, then (if success) delete it in UI
@@ -351,20 +369,22 @@
                                 data.Connection_Left_Term_Id = left.scope().$nodeScope.$modelValue.id;
                                 data.Connection_Right_Term_Id = right.scope().$nodeScope.$modelValue.id;
 
-                                treeServer.addConnection(data).then(function () {
+                                treeServer.addConnection(data).then(function (new_Connection_Id) {
+                                    data.Connection_Id = new_Connection_Id
                                     addLink({
                                         first: left,
                                         firstId: leftId,
                                         second: right,
-                                        secondId: rightId
+                                        secondId: rightId,
+                                        connectionId: new_Connection_Id
                                     });
 
-                                    /*addLink({
-                                        firstId: rightId,
-                                        secondId: leftId
-                                    });*/
+                                    var line = drawLine(left, right, data.Connection_Id, false); // and draw
 
-                                    drawLine(left, right, false); // and draw
+                                    $compile(line)($scope);
+
+                                    buildContextMenu(new_Connection_Id);
+                                    
                                     $scope.resetConnecting(); // and clear state
                                 });
                             });
@@ -372,7 +392,12 @@
                     }
                     return true;
                 };
+                function buildContextMenu(id) {
 
+                    var context = $('<div class="dropdown" style="position: fixed;z-index:999;cursor:pointer;" id="menu-' + id + '"><ul class="dropdown-menu" role="menu"><li><a class="pointer" role="menuitem" tabindex="1" ng-click="deleteConnection(' + id + ');">Delete Connection </a></li></ul></div> ');
+                    context.appendTo('body');
+                    $compile(context)($scope);
+                }
                 /**
                  * Recursive function which gets the conectios form the nodes
                  */
@@ -405,15 +430,11 @@
                     return $q(function (resolve, reject) {
                         treeServer.getConnectionsForTerms(nodes.map(function (item) { return item.id })).then(function (connections) {
                             connections.forEach(function (item) {
-                                addLink({
-                                    firstId: item.Connection_Left_Tree_Id + ":" + item.Connection_Left_Term_Id,
-                                    secondId: item.Connection_Right_Tree_Id + ":" + item.Connection_Right_Term_Id
-                                });
-
-                                /*addLink({
-                                        secondId: item.Connection_Left_Tree_Id + ":" + item.Connection_Left_Term_Id,
-                                        firstId: item.Connection_Right_Tree_Id + ":" + item.Connection_Right_Term_Id
-                                    });*/
+                                    addLink({
+                                        firstId: item.Connection_Left_Tree_Id + ":" + item.Connection_Left_Term_Id,
+                                        secondId: item.Connection_Right_Tree_Id + ":" + item.Connection_Right_Term_Id,
+                                        connectionId: item.Connection_Id
+                                    });
                             });
 
                             if (connections.length) $scope.redrawLines();
@@ -483,8 +504,11 @@
                             if ($scope.shouldShowLink(link)) {
 
 
-                                drawLine(treeVisible(link.firstId, '_left') ? getNode(link.firstId, 'left') : getNode(link.secondId, 'left'),
-                                         treeVisible(link.secondId, '_right') ? getNode(link.secondId, 'right') : getNode(link.firstId, 'right'), true);
+                               var line = drawLine(treeVisible(link.firstId, '_left') ? getNode(link.firstId, 'left') : getNode(link.secondId, 'left'),
+                                         treeVisible(link.secondId, '_right') ? getNode(link.secondId, 'right') : getNode(link.firstId, 'right'),link.connectionId, true);
+                               $compile(line)($scope);
+                               buildContextMenu(link.connectionId);
+                             
                             }
                         }
                     })
@@ -834,6 +858,20 @@
     }
 
     /**
+     * remove  link between items to the cache
+     * @param link link
+     */
+    function removeLink(id) {
+        var newLinks = [];
+        links.forEach(function (l) {
+            if (l.connectionId != id) {
+                newLinks.push(l);
+            }
+        })
+        links = angular.copy(newLinks);
+      
+    }
+    /**
      * Find if there is a link between two items and return it
      * @param firstId
      * @param secondId
@@ -873,7 +911,7 @@
      * @param _2 second jqLite/jquery element
      * @param jq - true if elements are jquery elements and false if jqLite elements
      */
-    function drawLine(_1, _2, jq) {
+    function drawLine(_1, _2,id ,jq) {
         var el1 = getElement(_1, jq),
             el2 = getElement(_2, jq),
             x1 = el1.offset().left + el1.width() + 20 + 1, // + left padding + border width
@@ -885,7 +923,7 @@
         var angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
         var transform = 'rotate(' + angle + 'deg)';
 
-        var line = $('<div>')
+        var line = $('<div context-menu data-target="menu-' + id + '">')
             .appendTo('body > .container')
             .addClass('line')
             .css({
@@ -896,10 +934,14 @@
                 left: x1,
                 top: y1
             })
+            .attr("id",id)
             .width(length);
 
+        
+            
         drawCircle(x1, y1);
         drawCircle(x2, y2);
+        return line;
     }
 
     /**

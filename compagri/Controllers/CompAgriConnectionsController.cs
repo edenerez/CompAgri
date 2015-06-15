@@ -47,8 +47,10 @@ namespace CompAgri.Controllers
         [HttpGet]
         public IEnumerable<Models.Terms.Connection> getForTerms(string termIds)
         {
-            if (!String.IsNullOrWhiteSpace(termIds))
+            if (!String.IsNullOrWhiteSpace(termIds)){
                 return Models.Terms.Connection.GetForTerms(termIds.Split(',').Select(t => int.Parse(t)));
+               
+            }
             else
                 return new Models.Terms.Connection[] { };
         }
@@ -60,7 +62,14 @@ namespace CompAgri.Controllers
             // This works, uncomment it when the real tree is used
             connection.Save();
             return connection.Connection_Id;
-            return 0;
+        }
+
+        [Route("Delete")]
+        [HttpPost]
+        public int DeleteConnection([FromBody] int id)
+        {
+            Models.Terms.Connection.Delete(id);
+            return 1;
         }
     }
 }
