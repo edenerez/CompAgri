@@ -369,20 +369,21 @@
                                 data.Connection_Left_Term_Id = left.scope().$nodeScope.$modelValue.id;
                                 data.Connection_Right_Term_Id = right.scope().$nodeScope.$modelValue.id;
 
-                                treeServer.addConnection(data).then(function () {
+                                treeServer.addConnection(data).then(function (new_Connection_Id) {
+                                    data.Connection_Id = new_Connection_Id
                                     addLink({
                                         first: left,
                                         firstId: leftId,
                                         second: right,
                                         secondId: rightId,
-                                        connectionId: data.Connection_Id
+                                        connectionId: new_Connection_Id
                                     });
 
                                     var line = drawLine(left, right, data.Connection_Id, false); // and draw
 
                                     $compile(line)($scope);
 
-                                    buildContextMenu(data.Connection_Id);
+                                    buildContextMenu(new_Connection_Id);
                                     
                                     $scope.resetConnecting(); // and clear state
                                 });
