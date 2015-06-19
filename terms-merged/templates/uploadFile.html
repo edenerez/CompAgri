@@ -1,0 +1,9 @@
+﻿<h1>Upload Xml</h1>
+
+<div class="container">
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+    <div class="row">
+        <input type="file" file-model="myFile" />
+        <button ng-click="uploadFile()">upload</button>
+    </div>
+</div>

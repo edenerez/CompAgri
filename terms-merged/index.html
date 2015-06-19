@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="style.css">
 </head>
-<body ng-app="demoApp" ng-controller="MainCtrl">
+<body ng-app="TermsDataEntry" ng-controller="AppController as this">
     <div class="container">
         <!-- Static navbar -->
         <nav class="navbar navbar-default">
@@ -27,42 +27,48 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="./">Data Entry and Visualization</a></li>
-                        <li><a href="upload.html">XMLFile Upload</a></li>
+                        <li class="active"><a href="#/">Data Entry and Visualization</a></li>
+                        <li><a href="#/uploadXml">XMLFile Upload</a></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div><!--/.container-fluid -->
         </nav>
 
-        <h1>Data Entry and Visualization</h1>
-
-        <div ng-include="'tabset.html'" ng-repeat="tabset in tabsets"></div>
+        <div ng-view></div>
     </div>
 
-        <script type="text/ng-template" id="tabset.html">
-            <tabset id="{{tabset.id}}_tabset" class="col-sm-6 tabset">
-                <tab ng-repeat="tree in trees" heading="{{tree.name}}" select="select($index, tabset.id)">
-                    <div ng-model="tree" ng-include="'tree.html'"></div>
-                </tab>
-            </tabset>
-        </script>
-
-        <script type="text/ng-template" id="tree.html">
-            <div ui-tree="treeOptions" data-drag-delay="100" id="tree-root_{{tree.id}}" data-type="tree-root">
-                <ol ui-tree-nodes ng-model="tree.list">
-                    <li ng-repeat="node in tree.list" ui-tree-node ng-include="'templates/nodes_renderer.html'"></li>
-                </ol>
-            </div>
-        </script>
 
     <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-        <script type="text/javascript" src="bower_components/angular/angular.js"></script>
-        <script type="text/javascript" src="bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
-        <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+    <script type="text/javascript" src="bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
+    <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script type="text/javascript" src="bower_components/ng-context-menu/src/ng-context-menu.js"></script>
+    <script type="text/javascript" src="bower_components/angular-route/angular-route.min.js"></script>
 
-        <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+
+    <!-- Controllers -->
+    <script type="text/javascript" src="js/controllers/uploadFileController.js"></script>
+    <script type="text/javascript" src="js/controllers/mainController.js"></script>
+    <script type="text/javascript" src="js/controllers/addModalController.js"></script>
+    <script type="text/javascript" src="js/controllers/termDetailsModalController.js"></script>
+    <script type="text/javascript" src="js/controllers/connectionModalController.js"></script>
+
+    <!-- Directives -->
+    <script type="text/javascript" src="js/directives/context.js"></script>
+    <script type="text/javascript" src="js/directives/fileModelBinder.js"></script>
+    
+    <!-- SeverProxies -->
+    <script type="text/javascript" src="js/proxies/connectionServer.js"></script>
+    <script type="text/javascript" src="js/proxies/nodeServer.js"></script>
+    <script type="text/javascript" src="js/proxies/termDetailsServer.js"></script>
+    <script type="text/javascript" src="js/proxies/treeServer.js"></script>
+    <script type="text/javascript" src="js/proxies/uploadFileServer.js"></script>
+
+    <!-- Services -->
+    <script type="text/javascript" src="js/services/linkService.js"></script>
+    <script type="text/javascript" src="js/services/treeService.js"></script>
 
 </body>
 </html>

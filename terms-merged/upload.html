@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="style.css">
 </head>
-<body ng-app="demoApp" ng-controller="UploadController">
+<body ng-app="TermsDataEntry" ng-controller="UploadController">
     <div class="container">
         <!-- Static navbar -->
         <nav class="navbar navbar-default">
@@ -39,16 +39,43 @@
         <div class="container">
             <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
             <div class="row">
-                <input type="file" file-model="myFile"/>
+                <input type="file" file-model="myFile" />
                 <button ng-click="uploadFile()">upload</button>
             </div>
         </div>
     </div>
+
+
     <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-        <script type="text/javascript" src="bower_components/angular/angular.js"></script>
-        <script type="text/javascript" src="bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
-        <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-        <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+    <script type="text/javascript" src="bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
+    <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script type="text/javascript" src="bower_components/ng-context-menu/src/ng-context-menu.js"></script>
+
+    <script type="text/javascript" src="js/app.js"></script>
+
+    <!-- Controllers -->
+    <script type="text/javascript" src="js/controllers/mainCtrl.js"></script>
+    <script type="text/javascript" src="js/controllers/uploadController.js"></script>
+    <script type="text/javascript" src="js/controllers/addModalController.js"></script>
+    <script type="text/javascript" src="js/controllers/termDetailsModalController.js"></script>
+    <script type="text/javascript" src="js/controllers/connectionModalController.js"></script>
+
+    <!-- Directives -->
+    <script type="text/javascript" src="js/directives/context.js"></script>
+    <script type="text/javascript" src="js/directives/fileModelBinder.js"></script>
+
+    <!-- SeverProxies -->
+    <script type="text/javascript" src="js/proxies/connectionServer.js"></script>
+    <script type="text/javascript" src="js/proxies/nodeServer.js"></script>
+    <script type="text/javascript" src="js/proxies/termDetailsServer.js"></script>
+    <script type="text/javascript" src="js/proxies/treeServer.js"></script>
+    <script type="text/javascript" src="js/proxies/uploadFileServer.js"></script>
+
+    <!-- Services -->
+    <script type="text/javascript" src="js/services/linkService.js"></script>
+    <script type="text/javascript" src="js/services/treeService.js"></script>
+
 </body>
 </html>

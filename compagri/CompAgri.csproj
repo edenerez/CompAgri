@@ -145,8 +145,10 @@
     <Compile Include="Connection.cs">
       <DependentUpon>CompAgriModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\CompAgriConnectionsController.cs" />
-    <Compile Include="Controllers\CompAgriController.cs" />
+    <Compile Include="Controllers\ConnectionsController.cs" />
+    <Compile Include="Controllers\NodeController.cs" />
+    <Compile Include="Controllers\TermDetailsController.cs" />
+    <Compile Include="Controllers\TreeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UploadXmlController.cs" />
     <Compile Include="Global.asax.cs">

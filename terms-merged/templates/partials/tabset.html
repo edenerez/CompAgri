@@ -1,0 +1,5 @@
+﻿<tabset id="{{tabset.id}}_tabset" class="col-sm-6 tabset">
+    <tab ng-repeat="tree in trees" heading="{{tree.name}}" select="select($index, tabset.id)">
+        <div ng-model="tree" ng-include="'./templates/partials/tree.html'"></div>
+    </tab>
+</tabset>

@@ -1,0 +1,5 @@
+﻿<div ui-tree="treeOptions" data-drag-delay="100" id="tree-root_{{tree.id}}" data-type="tree-root">
+    <ol ui-tree-nodes ng-model="tree.list">
+        <li ng-repeat="node in tree.list" ui-tree-node ng-include="'templates/partials/nodes_renderer.html'"></li>
+    </ol>
+</div>
