@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using System.Web.UI.WebControls;
-using System.Xml.Serialization;
 using CompAgri.Common;
 using CompAgri.Models.Authentication;
-using Newtonsoft.Json;
 
 namespace CompAgri.Controllers
 {
@@ -56,7 +51,7 @@ namespace CompAgri.Controllers
 
             using (var db = new CompAgriConnection())
             {
-                var previousUser = db.User.FirstOrDefault(u => u.UserName == userDto.UserName || u.Email == userDto.Email);
+                var previousUser = db.User.FirstOrDefault(u => (u.UserName != null && u.UserName == userDto.UserName) || (u.Email != null && u.Email == userDto.Email));
                 if (previousUser != null)
                 {
                     throw WebExceptionsFactory.GetUserDuplicatedException();
