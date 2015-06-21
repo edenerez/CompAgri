@@ -28,7 +28,6 @@ namespace CompAgri
         public virtual DbSet<Connection> Connection { get; set; }
         public virtual DbSet<Property> Property { get; set; }
         public virtual DbSet<Relation> Relation { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Term> Term { get; set; }
         public virtual DbSet<XmlFile> XmlFile { get; set; }
         public virtual DbSet<User> User { get; set; }

@@ -4,239 +4,228 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="DB_9BA48E_xmldbModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityContainer Name="DB_9BA48E_xmldbModelStoreContainer">
-    <EntitySet Name="Connection" EntityType="DB_9BA48E_xmldbModel.Store.Connection" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Property" EntityType="DB_9BA48E_xmldbModel.Store.Property" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Relation" EntityType="DB_9BA48E_xmldbModel.Store.Relation" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="sysdiagrams" EntityType="DB_9BA48E_xmldbModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Term" EntityType="DB_9BA48E_xmldbModel.Store.Term" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="XmlFile" EntityType="DB_9BA48E_xmldbModel.Store.XmlFile" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="User" EntityType="DB_9BA48E_xmldbModel.Store.User" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="UserProfile" EntityType="DB_9BA48E_xmldbModel.Store.UserProfile" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="UserProfilePermission" EntityType="DB_9BA48E_xmldbModel.Store.UserProfilePermission" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="FK_Connection_Term" Association="DB_9BA48E_xmldbModel.Store.FK_Connection_Term">
-      <End Role="Term" EntitySet="Term" />
-      <End Role="Connection" EntitySet="Connection" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Connection_Term1" Association="DB_9BA48E_xmldbModel.Store.FK_Connection_Term1">
-      <End Role="Term" EntitySet="Term" />
-      <End Role="Connection" EntitySet="Connection" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Property_Term" Association="DB_9BA48E_xmldbModel.Store.FK_Property_Term">
-      <End Role="Term" EntitySet="Term" />
-      <End Role="Property" EntitySet="Property" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Relation_Relation_Parent" Association="DB_9BA48E_xmldbModel.Store.FK_Relation_Relation_Parent">
-      <End Role="Term" EntitySet="Term" />
-      <End Role="Relation" EntitySet="Relation" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Relation_Term_Child" Association="DB_9BA48E_xmldbModel.Store.FK_Relation_Term_Child">
-      <End Role="Term" EntitySet="Term" />
-      <End Role="Relation" EntitySet="Relation" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Term_XmlFile" Association="DB_9BA48E_xmldbModel.Store.FK_Term_XmlFile">
-      <End Role="XmlFile" EntitySet="XmlFile" />
-      <End Role="Term" EntitySet="Term" />
-    </AssociationSet>
-    <AssociationSet Name="UserUserProfile" Association="DB_9BA48E_xmldbModel.Store.UserUserProfile">
-      <End Role="User" EntitySet="User" />
-      <End Role="UserProfile" EntitySet="UserProfile" />
-    </AssociationSet>
-    <AssociationSet Name="UserProfileUserProfilePermission" Association="DB_9BA48E_xmldbModel.Store.UserProfileUserProfilePermission">
-      <End Role="UserProfile" EntitySet="UserProfile" />
-      <End Role="UserProfilePermission" EntitySet="UserProfilePermission" />
-    </AssociationSet>
-  </EntityContainer>
-  <EntityType Name="Connection">
-    <Key>
-      <PropertyRef Name="Connection_Id" />
-    </Key>
-    <Property Name="Connection_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Connection_Left_Term_Id" Type="int" Nullable="true" />
-    <Property Name="Connection_Right_Term_Id" Type="int" Nullable="true" />
-    <Property Name="Connection_Name" Type="nvarchar" Nullable="true" MaxLength="256" />
-    <Property Name="Connection_Synonym" Type="nvarchar" Nullable="true" MaxLength="1024" />
-    <Property Name="Connection_Time_Limitation" Type="nvarchar" Nullable="true" MaxLength="256" />
-    <Property Name="Connection_Position_Limitation" Type="nvarchar" Nullable="true" MaxLength="256" />
-    <Property Name="Connection__Amount_Limitation" Type="int" Nullable="true" />
-    <Property Name="Connection_Climate_Limitation" Type="nvarchar" Nullable="true" MaxLength="512" />
-    <Property Name="Connection_Season_Limitation" Type="nvarchar" Nullable="true" MaxLength="512" />
-    <Property Name="Connection_Measurement" Type="nvarchar" Nullable="true" MaxLength="256" />
-    <Property Name="Connection_IsDelete" Type="bit" Nullable="true" />
-  </EntityType>
-  <EntityType Name="Property">
-    <Key>
-      <PropertyRef Name="Property_Id" />
-    </Key>
-    <Property Name="Property_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Property_Term_Id" Type="int" Nullable="true" />
-    <Property Name="Property_Key" Type="nvarchar" Nullable="true" MaxLength="512" />
-    <Property Name="Property_Value" Type="nvarchar" Nullable="true" MaxLength="2048" />
-  </EntityType>
-  <EntityType Name="Relation">
-    <Key>
-      <PropertyRef Name="Relation_Id" />
-    </Key>
-    <Property Name="Relation_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Relation_Parent_Term_Id" Type="int" Nullable="true" />
-    <Property Name="Relation_Child_Term_Id" Type="int" Nullable="true" />
-    <Property Name="Relation_IsDelete" Type="bit" Nullable="true" />
-  </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" Nullable="true" />
-    <Property Name="definition" Type="varbinary(max)" Nullable="true" />
-  </EntityType>
-  <EntityType Name="Term">
-    <Key>
-      <PropertyRef Name="Term_Id" />
-    </Key>
-    <Property Name="Term_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Term_XmlFile_Id" Type="int" Nullable="true" />
-    <Property Name="Term_Title" Type="nvarchar" Nullable="true" MaxLength="2048" />
-  </EntityType>
-  <EntityType Name="XmlFile">
-    <Key>
-      <PropertyRef Name="XmlFile_Id" />
-    </Key>
-    <Property Name="XmlFile_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="XmlFile_Name" Type="nvarchar" Nullable="true" MaxLength="512" />
-  </EntityType>
-  <EntityType Name="User">
-    <Key>
-      <PropertyRef Name="User_Id" />
-    </Key>
-    <Property Name="User_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="PasswordSalt" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Token" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="UserProfile_Id" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="UserProfile">
-    <Key>
-      <PropertyRef Name="UserProfile_Id" />
-    </Key>
-    <Property Name="UserProfile_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ProfileName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="CanLikeContributorConnection" Type="bit" Nullable="true" />
-  </EntityType>
-  <EntityType Name="UserProfilePermission">
-    <Key>
-      <PropertyRef Name="UserProfilePermission_Id" />
-    </Key>
-    <Property Name="UserProfilePermission_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ControllerName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="ActionName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Allow" Type="bit" Nullable="true" />
-    <Property Name="Deny" Type="bit" Nullable="true" />
-    <Property Name="UserProfile_Id" Type="int" Nullable="false" />
-  </EntityType>
-  <Association Name="FK_Connection_Term">
-    <End Role="Term" Type="DB_9BA48E_xmldbModel.Store.Term" Multiplicity="0..1" />
-    <End Role="Connection" Type="DB_9BA48E_xmldbModel.Store.Connection" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Term">
-        <PropertyRef Name="Term_Id" />
-      </Principal>
-      <Dependent Role="Connection">
-        <PropertyRef Name="Connection_Left_Term_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Connection_Term1">
-    <End Role="Term" Type="DB_9BA48E_xmldbModel.Store.Term" Multiplicity="0..1" />
-    <End Role="Connection" Type="DB_9BA48E_xmldbModel.Store.Connection" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Term">
-        <PropertyRef Name="Term_Id" />
-      </Principal>
-      <Dependent Role="Connection">
-        <PropertyRef Name="Connection_Right_Term_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Property_Term">
-    <End Role="Term" Type="DB_9BA48E_xmldbModel.Store.Term" Multiplicity="0..1" />
-    <End Role="Property" Type="DB_9BA48E_xmldbModel.Store.Property" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Term">
-        <PropertyRef Name="Term_Id" />
-      </Principal>
-      <Dependent Role="Property">
-        <PropertyRef Name="Property_Term_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Relation_Relation_Parent">
-    <End Role="Term" Type="DB_9BA48E_xmldbModel.Store.Term" Multiplicity="0..1" />
-    <End Role="Relation" Type="DB_9BA48E_xmldbModel.Store.Relation" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Term">
-        <PropertyRef Name="Term_Id" />
-      </Principal>
-      <Dependent Role="Relation">
-        <PropertyRef Name="Relation_Parent_Term_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Relation_Term_Child">
-    <End Role="Term" Type="DB_9BA48E_xmldbModel.Store.Term" Multiplicity="0..1" />
-    <End Role="Relation" Type="DB_9BA48E_xmldbModel.Store.Relation" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Term">
-        <PropertyRef Name="Term_Id" />
-      </Principal>
-      <Dependent Role="Relation">
-        <PropertyRef Name="Relation_Child_Term_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Term_XmlFile">
-    <End Role="XmlFile" Type="DB_9BA48E_xmldbModel.Store.XmlFile" Multiplicity="0..1" />
-    <End Role="Term" Type="DB_9BA48E_xmldbModel.Store.Term" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="XmlFile">
-        <PropertyRef Name="XmlFile_Id" />
-      </Principal>
-      <Dependent Role="Term">
-        <PropertyRef Name="Term_XmlFile_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="UserUserProfile">
-    <End Role="User" Type="DB_9BA48E_xmldbModel.Store.User" Multiplicity="*" />
-    <End Role="UserProfile" Type="DB_9BA48E_xmldbModel.Store.UserProfile" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="UserProfile">
-        <PropertyRef Name="UserProfile_Id" />
-      </Principal>
-      <Dependent Role="User">
-        <PropertyRef Name="UserProfile_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="UserProfileUserProfilePermission">
-    <End Role="UserProfile" Type="DB_9BA48E_xmldbModel.Store.UserProfile" Multiplicity="1" />
-    <End Role="UserProfilePermission" Type="DB_9BA48E_xmldbModel.Store.UserProfilePermission" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="UserProfile">
-        <PropertyRef Name="UserProfile_Id" />
-      </Principal>
-      <Dependent Role="UserProfilePermission">
-        <PropertyRef Name="UserProfile_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-</Schema></edmx:StorageModels>
+    <Schema Namespace="DB_9BA48E_xmldbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Connection">
+          <Key>
+            <PropertyRef Name="Connection_Id" />
+          </Key>
+          <Property Name="Connection_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Connection_Left_Term_Id" Type="int" />
+          <Property Name="Connection_Right_Term_Id" Type="int" />
+          <Property Name="Connection_Name" Type="nvarchar" MaxLength="256" />
+          <Property Name="Connection_Synonym" Type="nvarchar" MaxLength="1024" />
+          <Property Name="Connection_Time_Limitation" Type="nvarchar" MaxLength="256" />
+          <Property Name="Connection_Position_Limitation" Type="nvarchar" MaxLength="256" />
+          <Property Name="Connection__Amount_Limitation" Type="int" />
+          <Property Name="Connection_Climate_Limitation" Type="nvarchar" MaxLength="512" />
+          <Property Name="Connection_Season_Limitation" Type="nvarchar" MaxLength="512" />
+          <Property Name="Connection_Measurement" Type="nvarchar" MaxLength="256" />
+          <Property Name="Connection_IsDelete" Type="bit" />
+        </EntityType>
+        <EntityType Name="Property">
+          <Key>
+            <PropertyRef Name="Property_Id" />
+          </Key>
+          <Property Name="Property_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Property_Term_Id" Type="int" />
+          <Property Name="Property_Key" Type="nvarchar" MaxLength="512" />
+          <Property Name="Property_Value" Type="nvarchar" MaxLength="2048" />
+        </EntityType>
+        <EntityType Name="Relation">
+          <Key>
+            <PropertyRef Name="Relation_Id" />
+          </Key>
+          <Property Name="Relation_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Relation_Parent_Term_Id" Type="int" />
+          <Property Name="Relation_Child_Term_Id" Type="int" />
+          <Property Name="Relation_IsDelete" Type="bit" />
+        </EntityType>
+        <EntityType Name="Term">
+          <Key>
+            <PropertyRef Name="Term_Id" />
+          </Key>
+          <Property Name="Term_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Term_XmlFile_Id" Type="int" />
+          <Property Name="Term_Title" Type="nvarchar" MaxLength="2048" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="User_Id" />
+          </Key>
+          <Property Name="User_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="LastName" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PasswordSalt" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Token" Type="nvarchar(max)" />
+          <Property Name="UserProfile_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="UserProfile_Id" />
+          </Key>
+          <Property Name="UserProfile_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProfileName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CanLikeContributorConnection" Type="bit" />
+        </EntityType>
+        <EntityType Name="UserProfilePermission">
+          <Key>
+            <PropertyRef Name="UserProfilePermission_Id" />
+          </Key>
+          <Property Name="UserProfilePermission_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ControllerName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ActionName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Allow" Type="bit" />
+          <Property Name="Deny" Type="bit" />
+          <Property Name="UserProfile_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="XmlFile">
+          <Key>
+            <PropertyRef Name="XmlFile_Id" />
+          </Key>
+          <Property Name="XmlFile_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="XmlFile_Name" Type="nvarchar" MaxLength="512" />
+        </EntityType>
+        <Association Name="FK_Connection_Term">
+          <End Role="Term" Type="Self.Term" Multiplicity="0..1" />
+          <End Role="Connection" Type="Self.Connection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Term">
+              <PropertyRef Name="Term_Id" />
+            </Principal>
+            <Dependent Role="Connection">
+              <PropertyRef Name="Connection_Left_Term_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Connection_Term1">
+          <End Role="Term" Type="Self.Term" Multiplicity="0..1" />
+          <End Role="Connection" Type="Self.Connection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Term">
+              <PropertyRef Name="Term_Id" />
+            </Principal>
+            <Dependent Role="Connection">
+              <PropertyRef Name="Connection_Right_Term_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Property_Term">
+          <End Role="Term" Type="Self.Term" Multiplicity="0..1" />
+          <End Role="Property" Type="Self.Property" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Term">
+              <PropertyRef Name="Term_Id" />
+            </Principal>
+            <Dependent Role="Property">
+              <PropertyRef Name="Property_Term_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Relation_Relation_Parent">
+          <End Role="Term" Type="Self.Term" Multiplicity="0..1" />
+          <End Role="Relation" Type="Self.Relation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Term">
+              <PropertyRef Name="Term_Id" />
+            </Principal>
+            <Dependent Role="Relation">
+              <PropertyRef Name="Relation_Parent_Term_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Relation_Term_Child">
+          <End Role="Term" Type="Self.Term" Multiplicity="0..1" />
+          <End Role="Relation" Type="Self.Relation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Term">
+              <PropertyRef Name="Term_Id" />
+            </Principal>
+            <Dependent Role="Relation">
+              <PropertyRef Name="Relation_Child_Term_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Term_XmlFile">
+          <End Role="XmlFile" Type="Self.XmlFile" Multiplicity="0..1" />
+          <End Role="Term" Type="Self.Term" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XmlFile">
+              <PropertyRef Name="XmlFile_Id" />
+            </Principal>
+            <Dependent Role="Term">
+              <PropertyRef Name="Term_XmlFile_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserProfileUserProfilePermission">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
+          <End Role="UserProfilePermission" Type="Self.UserProfilePermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="UserProfile_Id" />
+            </Principal>
+            <Dependent Role="UserProfilePermission">
+              <PropertyRef Name="UserProfile_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserUserProfile">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="UserProfile_Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserProfile_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_9BA48E_xmldbModelStoreContainer">
+          <EntitySet Name="Connection" EntityType="Self.Connection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Property" EntityType="Self.Property" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Relation" EntityType="Self.Relation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Term" EntityType="Self.Term" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserProfilePermission" EntityType="Self.UserProfilePermission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="XmlFile" EntityType="Self.XmlFile" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Connection_Term" Association="Self.FK_Connection_Term">
+            <End Role="Term" EntitySet="Term" />
+            <End Role="Connection" EntitySet="Connection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Connection_Term1" Association="Self.FK_Connection_Term1">
+            <End Role="Term" EntitySet="Term" />
+            <End Role="Connection" EntitySet="Connection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Property_Term" Association="Self.FK_Property_Term">
+            <End Role="Term" EntitySet="Term" />
+            <End Role="Property" EntitySet="Property" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Relation_Relation_Parent" Association="Self.FK_Relation_Relation_Parent">
+            <End Role="Term" EntitySet="Term" />
+            <End Role="Relation" EntitySet="Relation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Relation_Term_Child" Association="Self.FK_Relation_Term_Child">
+            <End Role="Term" EntitySet="Term" />
+            <End Role="Relation" EntitySet="Relation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Term_XmlFile" Association="Self.FK_Term_XmlFile">
+            <End Role="XmlFile" EntitySet="XmlFile" />
+            <End Role="Term" EntitySet="Term" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserProfileUserProfilePermission" Association="Self.FK_UserProfileUserProfilePermission">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="UserProfilePermission" EntitySet="UserProfilePermission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserUserProfile" Association="Self.FK_UserUserProfile">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DB_9BA48E_xmldbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -279,16 +268,6 @@
           <Property Name="Relation_IsDelete" Type="Boolean" />
           <NavigationProperty Name="Term" Relationship="Self.FK_Relation_Relation_Parent" FromRole="Relation" ToRole="Term" />
           <NavigationProperty Name="Term1" Relationship="Self.FK_Relation_Term_Child" FromRole="Relation" ToRole="Term" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="Term">
           <Key>
@@ -388,7 +367,6 @@
           <EntitySet Name="Connection" EntityType="Self.Connection" />
           <EntitySet Name="Property" EntityType="Self.Property" />
           <EntitySet Name="Relation" EntityType="Self.Relation" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Term" EntityType="Self.Term" />
           <EntitySet Name="XmlFile" EntityType="Self.XmlFile" />
           <AssociationSet Name="FK_Connection_Term" Association="Self.FK_Connection_Term">
@@ -432,12 +410,12 @@
             <PropertyRef Name="User_Id" />
           </Key>
           <Property Name="User_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" />
-          <Property Name="LastName" Type="String" Nullable="false" />
-          <Property Name="Email" Type="String" Nullable="false" />
-          <Property Name="Password" Type="String" Nullable="false" />
-          <Property Name="PasswordSalt" Type="String" Nullable="false" />
-          <Property Name="Token" Type="String" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="LastName" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="PasswordSalt" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Token" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="UserProfile" Relationship="DB_9BA48E_xmldbModel.UserUserProfile" FromRole="User" ToRole="UserProfile" />
           <Property Name="UserProfile_Id" Type="Int32" Nullable="false" />
         </EntityType>
@@ -446,7 +424,7 @@
             <PropertyRef Name="UserProfile_Id" />
           </Key>
           <Property Name="UserProfile_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProfileName" Type="String" Nullable="false" />
+          <Property Name="ProfileName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="CanLikeContributorConnection" Type="Boolean" Nullable="true" />
         </EntityType>
         <Association Name="UserUserProfile">
@@ -466,8 +444,8 @@
             <PropertyRef Name="UserProfilePermission_Id" />
           </Key>
           <Property Name="UserProfilePermission_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ControllerName" Type="String" Nullable="false" />
-          <Property Name="ActionName" Type="String" Nullable="false" />
+          <Property Name="ControllerName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="ActionName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="Allow" Type="Boolean" Nullable="true" />
           <Property Name="Deny" Type="Boolean" Nullable="true" />
           <NavigationProperty Name="UserProfile" Relationship="DB_9BA48E_xmldbModel.UserProfileUserProfilePermission" FromRole="UserProfilePermission" ToRole="UserProfile" />
@@ -526,17 +504,6 @@
           <ScalarProperty Name="Relation_Parent_Term_Id" ColumnName="Relation_Parent_Term_Id" />
           <ScalarProperty Name="Relation_Child_Term_Id" ColumnName="Relation_Child_Term_Id" />
           <ScalarProperty Name="Relation_IsDelete" ColumnName="Relation_IsDelete" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="sysdiagrams">
-      <EntityTypeMapping TypeName="IsTypeOf(DB_9BA48E_xmldbModel.sysdiagrams)">
-        <MappingFragment StoreEntitySet="sysdiagrams">
-          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-          <ScalarProperty Name="version" ColumnName="version" />
-          <ScalarProperty Name="definition" ColumnName="definition" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

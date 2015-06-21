@@ -8,7 +8,6 @@
         <EntityTypeShape EntityType="DB_9BA48E_xmldbModel.Connection" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9BA48E_xmldbModel.Property" Width="1.5" PointX="5.25" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9BA48E_xmldbModel.Relation" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_9BA48E_xmldbModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9BA48E_xmldbModel.Term" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_9BA48E_xmldbModel.XmlFile" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
         <AssociationConnector Association="DB_9BA48E_xmldbModel.FK_Connection_Term" ManuallyRouted="false" />

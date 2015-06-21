@@ -2,27 +2,55 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 06/09/2015 18:29:49
--- Generated from EDMX file: D:\Projects\GIT\CompAgri\CompAgri\CompAgriModel.edmx
+-- Date Created: 06/20/2015 21:23:17
+-- Generated from EDMX file: C:\Users\Fausto\Proyectos\CompAgri\CompAgri\CompAgriModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [DB_9BA48E_xmldb];
+USE [XMLDB];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
 
+-- --------------------------------------------------
+-- Dropping existing FOREIGN KEY constraints
+-- --------------------------------------------------
+
+IF OBJECT_ID(N'[dbo].[FK_UserUserProfile]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[User] DROP CONSTRAINT [FK_UserUserProfile];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserProfileUserProfilePermission]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserProfilePermission] DROP CONSTRAINT [FK_UserProfileUserProfilePermission];
+GO
+
+-- --------------------------------------------------
+-- Dropping existing tables
+-- --------------------------------------------------
+
+IF OBJECT_ID(N'[dbo].[User]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[User];
+GO
+IF OBJECT_ID(N'[dbo].[UserProfile]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[UserProfile];
+GO
+IF OBJECT_ID(N'[dbo].[UserProfilePermission]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[UserProfilePermission];
+GO
+
+-- --------------------------------------------------
+-- Creating all tables
+-- --------------------------------------------------
 
 -- Creating table 'User'
 CREATE TABLE [dbo].[User] (
     [User_Id] int IDENTITY(1,1) NOT NULL,
-    [Name] nvarchar(max)  NOT NULL,
-    [LastName] nvarchar(max)  NOT NULL,
+    [Name] nvarchar(max)  NULL,
+    [LastName] nvarchar(max)  NULL,
     [Email] nvarchar(max)  NOT NULL,
     [Password] nvarchar(max)  NOT NULL,
     [PasswordSalt] nvarchar(max)  NOT NULL,
-    [Token] nvarchar(max)  NOT NULL,
+    [Token] nvarchar(max)  NULL,
     [UserProfile_Id] int  NOT NULL
 );
 GO
