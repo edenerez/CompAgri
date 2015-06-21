@@ -9,14 +9,27 @@ using System.Web.Http;
 
 namespace CompAgri.Controllers
 {
+    [Common.AuthorizeFilter]
     public class LoginController : ApiController
     {
+        [AllowAnonymous]
         public UserDto Post([FromBody] UserDto user)
         {
             User userFromDatabase;
             using (var db = new CompAgriConnection())
             {
-                userFromDatabase = db.User.FirstOrDefault(u => u.Email == user.Email);
+                if (user.Email != null)
+                {
+                    userFromDatabase = db.User.FirstOrDefault(u => u.Email == user.Email);
+                }
+                else if (user.UserName != null)
+                {
+                    userFromDatabase = db.User.FirstOrDefault(u => u.UserName == user.UserName);
+                }
+                else
+                {
+                    throw new HttpResponseException(HttpStatusCode.BadRequest);
+                }
 
                 if (userFromDatabase == null)
                 {
@@ -27,7 +40,7 @@ namespace CompAgri.Controllers
 
                 if (hashedPassword != userFromDatabase.Password)
                 {
-                    throw new UserWrongPasswordException();
+                    throw new HttpResponseException(HttpStatusCode.Forbidden);
                 }
                 else
                 {
@@ -42,12 +55,12 @@ namespace CompAgri.Controllers
 
         public UserDto Get()
         {
-            if(!Request.Headers.Contains("CompagriUserToken"))
+            string token = UserUtils.GetUserToken(Request);
+
+            if (token == null)
             {
                 throw new HttpResponseException(HttpStatusCode.Forbidden);
             }
-
-            string token = Request.Headers.GetValues("CompagriUserToken").FirstOrDefault();
 
             using (var db = new CompAgriConnection())
             {
@@ -62,7 +75,12 @@ namespace CompAgri.Controllers
 
         public void Delete()
         {
-            string token = Request.Headers.GetValues("CompagriUserToken").FirstOrDefault();
+            string token = UserUtils.GetUserToken(Request);
+
+            if (token == null)
+            {
+                return;
+            }
 
             using (var db = new CompAgriConnection())
             {

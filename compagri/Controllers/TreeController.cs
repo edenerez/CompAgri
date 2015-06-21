@@ -7,6 +7,7 @@ using System.Web.Http;
 
 namespace CompAgri.Controllers
 {
+    [Common.AuthorizeFilter]
     public class TreeController : ApiController
     {
         public IEnumerable<Models.Terms.XMLFile> Get()

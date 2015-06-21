@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 
 namespace CompAgri.Controllers
 {
+    [Common.AuthorizeFilter]
     public class UserController : ApiController
     {
         public IEnumerable<UserDto> Get()
@@ -21,6 +22,7 @@ namespace CompAgri.Controllers
                 return db.User.Select(u => new UserDto()
                 {
                     User_Id = u.User_Id,
+                    UserName = u.UserName,
                     Name = u.Name,
                     LastName = u.LastName,
                     Email = u.Email,
@@ -44,6 +46,7 @@ namespace CompAgri.Controllers
             }
         }
 
+        [AllowAnonymous]
         public UserDto Post([FromBody] UserDto userDto)
         {
             if (!userDto.IsValid())
@@ -51,12 +54,18 @@ namespace CompAgri.Controllers
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            var userBeforeSave = userDto.User();
-            userBeforeSave.PasswordSalt = PasswordUtils.GenerateSalt();
-            userBeforeSave.Password = PasswordUtils.HashPassword(userBeforeSave.Password, userBeforeSave.PasswordSalt);
-
             using (var db = new CompAgriConnection())
             {
+                var previousUser = db.User.FirstOrDefault(u => u.UserName == userDto.UserName || u.Email == userDto.Email);
+                if (previousUser != null)
+                {
+                    throw WebExceptionsFactory.GetUserDuplicatedException();
+                }
+
+                var userBeforeSave = userDto.User();
+                userBeforeSave.PasswordSalt = PasswordUtils.GenerateSalt();
+                userBeforeSave.Password = PasswordUtils.HashPassword(userBeforeSave.Password, userBeforeSave.PasswordSalt);
+
                 var user = db.User.Add(userBeforeSave);
                 db.SaveChanges();
                 return new UserDto(user);

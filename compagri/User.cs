@@ -22,6 +22,7 @@ namespace CompAgri
         public string PasswordSalt { get; set; }
         public string Token { get; set; }
         public int UserProfile_Id { get; set; }
+        public string UserName { get; set; }
     
         public virtual UserProfile UserProfile { get; set; }
     }

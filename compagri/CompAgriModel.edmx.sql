@@ -45,9 +45,10 @@ GO
 -- Creating table 'User'
 CREATE TABLE [dbo].[User] (
     [User_Id] int IDENTITY(1,1) NOT NULL,
+    [UserName] nvarchar(max)  NULL,
     [Name] nvarchar(max)  NULL,
     [LastName] nvarchar(max)  NULL,
-    [Email] nvarchar(max)  NOT NULL,
+    [Email] nvarchar(max)  NULL,
     [Password] nvarchar(max)  NOT NULL,
     [PasswordSalt] nvarchar(max)  NOT NULL,
     [Token] nvarchar(max)  NULL,

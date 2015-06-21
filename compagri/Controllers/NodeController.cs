@@ -8,6 +8,7 @@ using System.Web.Http;
 
 namespace CompAgri.Controllers
 {
+    [Common.AuthorizeFilter]
     public class NodeController : ApiController
     {
         [HttpPost]

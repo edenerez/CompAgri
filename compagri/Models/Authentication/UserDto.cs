@@ -5,6 +5,7 @@ namespace CompAgri.Models.Authentication
     public class UserDto
     {
         public int User_Id { get; set; }
+        public string UserName { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
         [Required]
@@ -23,6 +24,7 @@ namespace CompAgri.Models.Authentication
         public UserDto(User user, bool includeToken = false)
         {
             User_Id = user.User_Id;
+            UserName = user.UserName;
             Name = user.Name;
             LastName = user.LastName;
             Email = user.Email;
@@ -38,6 +40,7 @@ namespace CompAgri.Models.Authentication
             return new User
             {
                 Email = this.Email,
+                UserName = this.UserName,
                 LastName = this.LastName,
                 Name = this.Name,
                 Password = this.Password,
@@ -49,11 +52,12 @@ namespace CompAgri.Models.Authentication
 
         public bool IsValid()
         {
-            bool valid = !String.IsNullOrWhiteSpace(Email);
+            bool valid = !String.IsNullOrWhiteSpace(Email) || !String.IsNullOrWhiteSpace(UserName);
             valid = valid && !String.IsNullOrWhiteSpace(Password);
             valid = valid && UserProfile_Id != 0;
 
             return valid;
         }
+
     }
 }

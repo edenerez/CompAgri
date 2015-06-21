@@ -8,6 +8,7 @@ using System.Web.Http;
 
 namespace CompAgri.Controllers
 {
+    [Common.AuthorizeFilter]
     public class TermDetailsController : ApiController
     {
         public TermDetails Get(int id)

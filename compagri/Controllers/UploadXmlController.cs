@@ -11,6 +11,7 @@ using System.Web.Http;
 
 namespace CompAgri.Controllers
 {
+    [Common.AuthorizeFilter]
     public class UploadXmlController : ApiController
     {
         public void Post()

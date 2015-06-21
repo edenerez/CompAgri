@@ -53,9 +53,10 @@
             <PropertyRef Name="User_Id" />
           </Key>
           <Property Name="User_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar(max)" />
           <Property Name="Name" Type="nvarchar(max)" />
           <Property Name="LastName" Type="nvarchar(max)" />
-          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" />
           <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
           <Property Name="PasswordSalt" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Token" Type="nvarchar(max)" />
@@ -412,12 +413,13 @@
           <Property Name="User_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="LastName" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="PasswordSalt" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="Token" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="UserProfile" Relationship="DB_9BA48E_xmldbModel.UserUserProfile" FromRole="User" ToRole="UserProfile" />
           <Property Name="UserProfile_Id" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="UserProfile">
           <Key>
@@ -527,7 +529,8 @@
     <EntitySetMapping Name="User">
       <EntityTypeMapping TypeName="IsTypeOf(DB_9BA48E_xmldbModel.User)">
         <MappingFragment StoreEntitySet="User">
-          <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="LastName" ColumnName="LastName" />
           <ScalarProperty Name="Email" ColumnName="Email" />
