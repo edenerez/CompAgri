@@ -33,6 +33,8 @@ namespace CompAgri.Models.Authentication
             {
                 Token = user.Token;
             }
+
+            this.UserProfile = new UserProfileDto(user.UserProfile);
         }
 
         public User User()
