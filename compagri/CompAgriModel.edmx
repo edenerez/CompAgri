@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="DB_9BA48E_xmldbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DB_9BA48E_xmldbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Connection">
           <Key>
             <PropertyRef Name="Connection_Id" />
@@ -53,7 +53,6 @@
             <PropertyRef Name="User_Id" />
           </Key>
           <Property Name="User_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserName" Type="nvarchar(max)" />
           <Property Name="Name" Type="nvarchar(max)" />
           <Property Name="LastName" Type="nvarchar(max)" />
           <Property Name="Email" Type="nvarchar(max)" />
@@ -61,6 +60,7 @@
           <Property Name="PasswordSalt" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Token" Type="nvarchar(max)" />
           <Property Name="UserProfile_Id" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="UserProfile">
           <Key>
@@ -396,42 +396,56 @@
           </AssociationSet>
           <EntitySet Name="User" EntityType="DB_9BA48E_xmldbModel.User" />
           <EntitySet Name="UserProfile" EntityType="DB_9BA48E_xmldbModel.UserProfile" />
-          <AssociationSet Name="UserUserProfile" Association="DB_9BA48E_xmldbModel.UserUserProfile">
-            <End Role="User" EntitySet="User" />
-            <End Role="UserProfile" EntitySet="UserProfile" />
-          </AssociationSet>
           <EntitySet Name="UserProfilePermission" EntityType="DB_9BA48E_xmldbModel.UserProfilePermission" />
-          <AssociationSet Name="UserProfileUserProfilePermission" Association="DB_9BA48E_xmldbModel.UserProfileUserProfilePermission">
+          <AssociationSet Name="FK_UserUserProfile" Association="DB_9BA48E_xmldbModel.FK_UserUserProfile">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserProfileUserProfilePermission" Association="DB_9BA48E_xmldbModel.FK_UserProfileUserProfilePermission">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="UserProfilePermission" EntitySet="UserProfilePermission" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="User_Id" />
           </Key>
           <Property Name="User_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="LastName" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="Email" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="PasswordSalt" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="Token" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="UserProfile" Relationship="DB_9BA48E_xmldbModel.UserUserProfile" FromRole="User" ToRole="UserProfile" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordSalt" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Token" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="UserProfile_Id" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserProfile" Relationship="DB_9BA48E_xmldbModel.FK_UserUserProfile" FromRole="User" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="UserProfile">
           <Key>
             <PropertyRef Name="UserProfile_Id" />
           </Key>
           <Property Name="UserProfile_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProfileName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="CanLikeContributorConnection" Type="Boolean" Nullable="true" />
+          <Property Name="ProfileName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CanLikeContributorConnection" Type="Boolean" />
+          <NavigationProperty Name="User" Relationship="DB_9BA48E_xmldbModel.FK_UserUserProfile" FromRole="UserProfile" ToRole="User" />
+          <NavigationProperty Name="UserProfilePermission" Relationship="DB_9BA48E_xmldbModel.FK_UserProfileUserProfilePermission" FromRole="UserProfile" ToRole="UserProfilePermission" />
         </EntityType>
-        <Association Name="UserUserProfile">
-          <End Type="DB_9BA48E_xmldbModel.User" Role="User" Multiplicity="*" />
+        <EntityType Name="UserProfilePermission">
+          <Key>
+            <PropertyRef Name="UserProfilePermission_Id" />
+          </Key>
+          <Property Name="UserProfilePermission_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ControllerName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ActionName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Allow" Type="Boolean" />
+          <Property Name="Deny" Type="Boolean" />
+          <Property Name="UserProfile_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UserProfile" Relationship="DB_9BA48E_xmldbModel.FK_UserProfileUserProfilePermission" FromRole="UserProfilePermission" ToRole="UserProfile" />
+        </EntityType>
+        <Association Name="FK_UserUserProfile">
           <End Type="DB_9BA48E_xmldbModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+          <End Type="DB_9BA48E_xmldbModel.User" Role="User" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UserProfile">
               <PropertyRef Name="UserProfile_Id" />
@@ -441,19 +455,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="UserProfilePermission">
-          <Key>
-            <PropertyRef Name="UserProfilePermission_Id" />
-          </Key>
-          <Property Name="UserProfilePermission_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ControllerName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="ActionName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="Allow" Type="Boolean" Nullable="true" />
-          <Property Name="Deny" Type="Boolean" Nullable="true" />
-          <NavigationProperty Name="UserProfile" Relationship="DB_9BA48E_xmldbModel.UserProfileUserProfilePermission" FromRole="UserProfilePermission" ToRole="UserProfile" />
-          <Property Name="UserProfile_Id" Type="Int32" Nullable="false" />
-        </EntityType>
-        <Association Name="UserProfileUserProfilePermission">
+        <Association Name="FK_UserProfileUserProfilePermission">
           <End Type="DB_9BA48E_xmldbModel.UserProfile" Role="UserProfile" Multiplicity="1" />
           <End Type="DB_9BA48E_xmldbModel.UserProfilePermission" Role="UserProfilePermission" Multiplicity="*" />
           <ReferentialConstraint>
@@ -465,7 +467,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -526,43 +528,43 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="User">
-      <EntityTypeMapping TypeName="IsTypeOf(DB_9BA48E_xmldbModel.User)">
-        <MappingFragment StoreEntitySet="User">
-          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="DB_9BA48E_xmldbModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserProfile_Id" ColumnName="UserProfile_Id" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="User_Id" ColumnName="User_Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="LastName" ColumnName="LastName" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
-          <ScalarProperty Name="Token" ColumnName="Token" />
-          <ScalarProperty Name="UserProfile_Id" ColumnName="UserProfile_Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="UserProfile">
-      <EntityTypeMapping TypeName="IsTypeOf(DB_9BA48E_xmldbModel.UserProfile)">
-        <MappingFragment StoreEntitySet="UserProfile">
-          <ScalarProperty Name="UserProfile_Id" ColumnName="UserProfile_Id" />
-          <ScalarProperty Name="ProfileName" ColumnName="ProfileName" />
-          <ScalarProperty Name="CanLikeContributorConnection" ColumnName="CanLikeContributorConnection" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="UserProfilePermission">
-      <EntityTypeMapping TypeName="IsTypeOf(DB_9BA48E_xmldbModel.UserProfilePermission)">
-        <MappingFragment StoreEntitySet="UserProfilePermission">
-          <ScalarProperty Name="UserProfilePermission_Id" ColumnName="UserProfilePermission_Id" />
-          <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
-          <ScalarProperty Name="ActionName" ColumnName="ActionName" />
-          <ScalarProperty Name="Allow" ColumnName="Allow" />
-          <ScalarProperty Name="Deny" ColumnName="Deny" />
-          <ScalarProperty Name="UserProfile_Id" ColumnName="UserProfile_Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-  </EntityContainerMapping>
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserProfile">
+            <EntityTypeMapping TypeName="DB_9BA48E_xmldbModel.UserProfile">
+              <MappingFragment StoreEntitySet="UserProfile">
+                <ScalarProperty Name="CanLikeContributorConnection" ColumnName="CanLikeContributorConnection" />
+                <ScalarProperty Name="ProfileName" ColumnName="ProfileName" />
+                <ScalarProperty Name="UserProfile_Id" ColumnName="UserProfile_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserProfilePermission">
+            <EntityTypeMapping TypeName="DB_9BA48E_xmldbModel.UserProfilePermission">
+              <MappingFragment StoreEntitySet="UserProfilePermission">
+                <ScalarProperty Name="UserProfile_Id" ColumnName="UserProfile_Id" />
+                <ScalarProperty Name="Deny" ColumnName="Deny" />
+                <ScalarProperty Name="Allow" ColumnName="Allow" />
+                <ScalarProperty Name="ActionName" ColumnName="ActionName" />
+                <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
+                <ScalarProperty Name="UserProfilePermission_Id" ColumnName="UserProfilePermission_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+    </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->

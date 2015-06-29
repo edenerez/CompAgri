@@ -27,8 +27,10 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="#/">Data Entry and Visualization</a></li>
+                        <li><a href="#/Main">Data Entry and Visualization</a></li>
                         <li><a href="#/uploadXml">XMLFile Upload</a></li>
+                        <li id="Login"><a href="#/">Login</a></li>
+                        <li id="LogOut"><a href="#/logout" ng-click="logout()">LogOut</a></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div><!--/.container-fluid -->
@@ -47,6 +49,7 @@
     <script type="text/javascript" src="bower_components/angular-route/angular-route.min.js"></script>
 
     <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
 
     <!-- Controllers -->
     <script type="text/javascript" src="js/controllers/uploadFileController.js"></script>
@@ -54,17 +57,21 @@
     <script type="text/javascript" src="js/controllers/addModalController.js"></script>
     <script type="text/javascript" src="js/controllers/termDetailsModalController.js"></script>
     <script type="text/javascript" src="js/controllers/connectionModalController.js"></script>
+    <script type="text/javascript" src="js/controllers/loginController.js"></script>
+    <script type="text/javascript" src="js/controllers/logoutController.js"></script>
 
     <!-- Directives -->
     <script type="text/javascript" src="js/directives/context.js"></script>
     <script type="text/javascript" src="js/directives/fileModelBinder.js"></script>
-    
+
     <!-- SeverProxies -->
     <script type="text/javascript" src="js/proxies/connectionServer.js"></script>
     <script type="text/javascript" src="js/proxies/nodeServer.js"></script>
     <script type="text/javascript" src="js/proxies/termDetailsServer.js"></script>
     <script type="text/javascript" src="js/proxies/treeServer.js"></script>
     <script type="text/javascript" src="js/proxies/uploadFileServer.js"></script>
+    <script type="text/javascript" src="js/proxies/loginService.js"></script>
+    <script type="text/javascript" src="js/proxies/logoutService.js"></script>
 
     <!-- Services -->
     <script type="text/javascript" src="js/services/linkService.js"></script>
@@ -72,3 +79,19 @@
 
 </body>
 </html>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var Data = window.localStorage['USERDATA'].toString();
+        if (Data == "null") {
+            $('#Login').show();
+            $('#LogOut').hide();
+        } else {
+            $('#Login').hide();
+            $('#LogOut').show();
+            
+
+        };
+    });
+</script>

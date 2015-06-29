@@ -1,0 +1,52 @@
+﻿<form name="myForm" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Body Section -->
+            <div class="modal-body">
+
+
+                <input type="email" class="form-control input-lg" ng-model="Username" name="Username" ng-class="Submitted?'ng-dirty':''" placeholder="Email" required />
+                <span style="color:red" ng-show="myForm.Username.$error.required && myform.Username.$invalid ">
+                    <span ng-show="myForm.Username.$error.required">Email is required.</span>
+                    <span ng-show="myForm.Username.$invalid">Email is InCorrect.</span>
+                </span>
+                <br />
+                <input type="password" class="form-control input-lg" ng-model="Password" name="Password" ng-class="Submitted?'ng-dirty':''" placeholder="Password" required />
+
+                <span style="color:red" ng-show="myForm.Password.$error.required && myform.Password.$invalid">
+                    <span ng-show="myForm.Password.$error.required">Password is required.</span>
+                </span>
+                <br/>
+                <div class="alert alert-danger fade in" ng-show="ErrorShow">
+                    <a href="/#Login" class="close" data-dismiss="alert">&times;</a>
+                    <strong>Error!</strong> {{Message}}
+                </div>
+                
+                <input type="submit" class="btn btn-primary btn-lg btn-block" ng-click="Login()"
+                       ng-disabled="myForm.Username.$error.required && myform.Username.$invalid ||  myForm.Password.$error.required">
+                <!--<button class="btn btn-primary btn-lg btn-block" ng-click="Login()" ng-hide="currentUserSignedIn" type="submit" id="btnAdd">Sign In</button>-->
+                <!--<button class="btn btn-primary btn-lg btn-block" ng-click="Reset()" type="submit" id="btnReset" onclick="btnResetClick();return false;">Cancel</button>-->
+                {{test}}
+            </div>
+            <!--</form>-->
+        </div>
+    </div>
+</form>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        debugger;
+        var Data = window.localStorage['USERDATA'].toString();
+        if (Data == "null") {
+            $('#Login').show();
+            $('#LogOut').hide();
+        } else {
+            $('#Login').hide();
+            $('#LogOut').show();
+        };
+    });
+</script>
+
+
+
