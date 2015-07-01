@@ -5,7 +5,7 @@
             <div class="modal-body">
 
 
-                <input type="email" class="form-control input-lg" ng-model="Username" name="Username" ng-class="Submitted?'ng-dirty':''" placeholder="Email" required />
+                <input type="text" class="form-control input-lg" ng-model="Username" name="Username" ng-class="Submitted?'ng-dirty':''" placeholder="Username" required />
                 <span style="color:red" ng-show="myForm.Username.$error.required && myform.Username.$invalid ">
                     <span ng-show="myForm.Username.$error.required">Email is required.</span>
                     <span ng-show="myForm.Username.$invalid">Email is InCorrect.</span>
@@ -32,21 +32,6 @@
         </div>
     </div>
 </form>
-
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        debugger;
-        var Data = window.localStorage['USERDATA'].toString();
-        if (Data == "null") {
-            $('#Login').show();
-            $('#LogOut').hide();
-        } else {
-            $('#Login').hide();
-            $('#LogOut').show();
-        };
-    });
-</script>
 
 
 

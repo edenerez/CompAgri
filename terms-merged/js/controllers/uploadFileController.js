@@ -1,20 +1,12 @@
 ﻿(function () {
     angular.module('TermsDataEntry')
-    //.controller("UploadFileController", UploadFileController, ['_authentication']);
     .controller("UploadFileController", UploadFileController);
 
+    function UploadFileController($scope, $http, $location, uploadFileServer, loginService) {
 
-    //function UploadFileController($scope, $http, $location, uploadFileServer, loginService) {
-    function UploadFileController($scope, $http, $location, uploadFileServer) {
-
-
-        //var USERDATA = JSON.parse(window.localStorage['USERDATA'] || '{}');
-        var USERDATA = JSON.parse(window.localStorage['USERDATA'] || '{}');
-
-        if (!USERDATA) {
+        if (!loginService.getUser()) {
             $location.path('/login')
         }
-
         else {
 
             $scope.alerts = [];

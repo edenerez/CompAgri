@@ -7,17 +7,3 @@
         <button ng-click="uploadFile()">upload</button>
     </div>
 </div>
-<script type="text/javascript">
-    $(document).ready(function () {
-        
-        var Data = JSON.parse(window.localStorage['USERDATA'] || '{}');
-        if (Data != null) {
-            $('#Login').hide();
-            $('#LogOut').show();
-        } else {
-            $('#Login').hide();
-            $('#LogOut').show();
-        };
-    
-});
-</script>

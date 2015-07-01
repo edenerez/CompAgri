@@ -1,30 +1,29 @@
-﻿(function () {
-    angular.module('TermsDataEntry')
-     .controller("loginController", loginController);
-     
+﻿(function (angular) {
+    angular.module('TermsDataEntry').controller("loginController", loginController);
+
     function loginController($scope, $http, $location, loginService) {
 
         $scope.Login = function () {
 
             $scope.Message = "";
             $scope.ErrorShow = false;
-            
+
             var LoginData = {
                 Email: $scope.Username,
+                Username: $scope.Username,
                 Password: $scope.Password
             };
 
-            
-            var promisePost = loginService.getUser(LoginData);
-            
-            promisePost.then(function (pl) {
-                $location.path('/uploadXml')
+            var loginPromise = loginService.login(LoginData);
+
+            loginPromise.then(function () {
+                $location.path('/Main')
             },
-              function (errorPl) {
-                  $scope.Message = "Username or Password is InCorrect.";
+              function () {
+                  $scope.Message = "Username or Password is Incorrect.";
                   $scope.ErrorShow = true;
               });
 
         };
     }
-}())
+}(this.angular))

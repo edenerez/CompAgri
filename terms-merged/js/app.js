@@ -19,16 +19,33 @@
           controllerAs: 'upload'
       })
             .when('/logout', {
-                //templateUrl: './templates/uploadFile.html',
                 templateUrl: './templates/login.html',
-                controller: 'logoutController',
-                //controllerAs: 'upload'
+                controller: 'logoutController'
             })
         .otherwise({
             redirectTo: '/'
         });
+
+    })
+    .run(function ($http, loginService) {
+        $http.defaults.headers.common.CompagriUserToken = function () {
+            return loginService.getUser() && loginService.getUser().Token;
+        };
     })
     .controller('AppController', AppController);
 
-    function AppController() { }
+    function AppController($scope, loginService) {
+
+        $scope.isLogedIn = function () {
+            return loginService.getUser();
+        };
+
+        $scope.logout = function logout() {
+            loginService.logout().then(function () {
+                $location.path('/')
+            }, function () {
+                $scope.error = 'Logout failure';
+            });
+        }
+    }
 }());

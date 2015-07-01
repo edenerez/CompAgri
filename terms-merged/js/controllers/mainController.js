@@ -1,11 +1,9 @@
 ﻿(function () {
     angular.module('TermsDataEntry')
      .controller("MainController", MainController);
-    function MainController($scope, $modal, $location, $q, $compile, linkService, treeService) {
+    function MainController($scope, $modal, $location, $q, $compile, linkService, treeService, treeServer, loginService, connectionServer, nodeServer) {
 
-        var USERDATA = JSON.parse(window.localStorage['USERDATA'] || '{}');
-
-        if (!USERDATA) {
+        if (!loginService.getUser()) {
             $location.path('/login')
         }
         else {
@@ -17,13 +15,11 @@
             }];
 
             $scope.deleteConnection = function (id) {
-                //deleting connexion by seting the isDelete column to true
-
-                //connectionServer.deleteConnection(id).then(function () {
-                //    linkService.removeLink(id);
-                //    $scope.redrawLines();
-                //    $scope.resetConnecting();
-                //});
+                connectionServer.deleteConnection(id).then(function () {
+                    linkService.removeLink(id);
+                    $scope.redrawLines();
+                    $scope.resetConnecting();
+                });
 
             };
             $scope.treeServer = treeServer;
@@ -226,20 +222,20 @@
                  */
                 $scope.downloadConnectionsForNodes = function downloadConnectionsForNodes(nodes, tree) {
                     return $q(function (resolve, reject) {
-                        //connectionServer.getConnectionsForTerms(nodes.map(function (item) { return item.id })).then(function (connections) {
-                        //    connections.forEach(function (item) {
-                        //        linkService.addLink({
-                        //            firstId: item.Connection_Left_Tree_Id + ":" + item.Connection_Left_Term_Id,
-                        //            secondId: item.Connection_Right_Tree_Id + ":" + item.Connection_Right_Term_Id,
-                        //            connectionId: item.Connection_Id
-                        //        });
-                        //    });
+                        connectionServer.getConnectionsForTerms(nodes.map(function (item) { return item.id })).then(function (connections) {
+                            connections.forEach(function (item) {
+                                linkService.addLink({
+                                    firstId: item.Connection_Left_Tree_Id + ":" + item.Connection_Left_Term_Id,
+                                    secondId: item.Connection_Right_Tree_Id + ":" + item.Connection_Right_Term_Id,
+                                    connectionId: item.Connection_Id
+                                });
+                            });
 
-                        //    if (connections.length) $scope.redrawLines();
+                            if (connections.length) $scope.redrawLines();
 
-                        //}).then(function () {
-                        //    return getConnectionForNodesChildren(nodes);
-                        //}).then(resolve, reject);
+                        }).then(function () {
+                            return getConnectionForNodesChildren(nodes);
+                        }).then(resolve, reject);
                     });
                 };
 

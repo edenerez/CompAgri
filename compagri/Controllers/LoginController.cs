@@ -13,24 +13,24 @@ namespace CompAgri.Controllers
     public class LoginController : ApiController
     {
         [AllowAnonymous]
-        [HttpPost]
-        //public UserDto Post([FromBody] UserDto user)
-        public UserDto Post(UserDto user)
+        public UserDto Post([FromBody] UserDto user)
         {
-            User userFromDatabase;
+            User userFromDatabase = null;
             using (var db = new CompAgriConnection())
             {
+                if (user.Email == null && user.UserName == null )
+                {
+                    throw new HttpResponseException(HttpStatusCode.BadRequest);
+                }
+
                 if (user.Email != null)
                 {
                     userFromDatabase = db.User.FirstOrDefault(u => u.Email == user.Email);
                 }
-                else if (user.UserName != null)
+
+                if (userFromDatabase == null && user.UserName != null)
                 {
                     userFromDatabase = db.User.FirstOrDefault(u => u.UserName == user.UserName);
-                }
-                else
-                {
-                    throw new HttpResponseException(HttpStatusCode.BadRequest);
                 }
 
                 if (userFromDatabase == null)

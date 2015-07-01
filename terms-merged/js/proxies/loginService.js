@@ -1,24 +1,43 @@
 ﻿angular.module('TermsDataEntry')
  .factory('loginService', function ($http, $q, apiLocation) {
 
-     return {
-         getUser: function (user) {
+     var HasSession = window.Storage,
+         SESSION_KEY = 'CompagriUser';
 
-             var deferred = $q.defer();
-             var request = $http({
-                 method: 'POST',
-                 contentType: 'application/json',
-                 url: 'http://localhost:53702/api/Login/Post',
-                 data: user
-             }).success(function (response) {
-                 deferred.resolve(response);
-                 window.localStorage['USERDATA'] = JSON.stringify(response);
-                 return response;
-             }).error(function (err, status) {
-                 deferred.reject(err);
-             });
-             return deferred.promise;
+     return {
+         login: function (user) {
+             return $http.post(apiLocation + 'Login', user).then(this.saveUser);
          },
+
+         saveUser: function saveUser(response) {
+             this.user = response.data;
+             if (HasSession) {
+                 window.sessionStorage.setItem(SESSION_KEY, JSON.stringify(this.user));
+             }
+             return this.user;
+         },
+
+         getUser: function getUser() {
+             if (!this.user && HasSession) {
+                 if (window.sessionStorage.getItem(SESSION_KEY)) {
+                     this.user = JSON.parse(window.sessionStorage.getItem(SESSION_KEY));
+                 }
+             }
+
+             return this.user;
+         },
+
+         logout: function () {
+             if (this.getUser()) {
+                 return $http.delete(apiLocation + 'Login').then(this.cleanUserData);
+             } else {
+                 return $q.defer().resolve().promise;
+             }
+         },
+
+         cleanUserData: function cleanUserData() {
+             window.sessionStorage.removeItem(SESSION_KEY);
+         }
      }
 
  });
