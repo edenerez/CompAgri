@@ -21,7 +21,7 @@ namespace CompAgri.Common
 
             var token = UserUtils.GetUserToken(actionContext.Request);
 
-            if(token == null)
+            if (token == null)
             {
                 return false;
             }
@@ -36,9 +36,7 @@ namespace CompAgri.Common
 
                 return UserHasPermissionToAction(user, actionContext);
             }
-        }
-
-        
+        }        
 
         private bool UserHasPermissionToAction(User user, HttpActionContext actionContext)
         {
