@@ -13,7 +13,9 @@ namespace CompAgri.Controllers
     public class LoginController : ApiController
     {
         [AllowAnonymous]
-        public UserDto Post([FromBody] UserDto user)
+        [HttpPost]
+        //public UserDto Post([FromBody] UserDto user)
+        public UserDto Post(UserDto user)
         {
             User userFromDatabase;
             using (var db = new CompAgriConnection())

@@ -16,11 +16,11 @@
         <AssociationConnector Association="DB_9BA48E_xmldbModel.FK_Relation_Relation_Parent" ManuallyRouted="false" />
         <AssociationConnector Association="DB_9BA48E_xmldbModel.FK_Relation_Term_Child" ManuallyRouted="false" />
         <AssociationConnector Association="DB_9BA48E_xmldbModel.FK_Term_XmlFile" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="DB_9BA48E_xmldbModel.User" Width="2" PointX="7.5" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_9BA48E_xmldbModel.UserProfile" Width="1.5" PointX="10.75" PointY="1.25" IsExpanded="true" />
-        <AssociationConnector Association="DB_9BA48E_xmldbModel.UserUserProfile" />
-        <EntityTypeShape EntityType="DB_9BA48E_xmldbModel.UserProfilePermission" Width="1.5" PointX="10.375" PointY="3.875" />
-        <AssociationConnector Association="DB_9BA48E_xmldbModel.UserProfileUserProfilePermission" />
+        <EntityTypeShape EntityType="DB_9BA48E_xmldbModel.User" Width="1.5" PointX="9.625" PointY="1.125" />
+        <EntityTypeShape EntityType="DB_9BA48E_xmldbModel.UserProfile" Width="1.5" PointX="7.375" PointY="3.125" />
+        <EntityTypeShape EntityType="DB_9BA48E_xmldbModel.UserProfilePermission" Width="1.5" PointX="9.625" PointY="4.875" />
+        <AssociationConnector Association="DB_9BA48E_xmldbModel.FK_UserUserProfile" />
+        <AssociationConnector Association="DB_9BA48E_xmldbModel.FK_UserProfileUserProfilePermission" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

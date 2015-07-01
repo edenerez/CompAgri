@@ -14,8 +14,17 @@ namespace CompAgri
     
     public partial class UserProfile
     {
+        public UserProfile()
+        {
+            this.User = new HashSet<User>();
+            this.UserProfilePermission = new HashSet<UserProfilePermission>();
+        }
+    
         public int UserProfile_Id { get; set; }
         public string ProfileName { get; set; }
         public Nullable<bool> CanLikeContributorConnection { get; set; }
+    
+        public virtual ICollection<User> User { get; set; }
+        public virtual ICollection<UserProfilePermission> UserProfilePermission { get; set; }
     }
 }
