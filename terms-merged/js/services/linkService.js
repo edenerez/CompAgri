@@ -68,7 +68,7 @@
          * @param _2 second jqLite/jquery element
          * @param jq - true if elements are jquery elements and false if jqLite elements
          */
-        drawLine: function drawLine(_1, _2, id, jq) {
+        drawLine: function drawLine(_1, _2, id, jq, addContextMenu) {
             var el1 = this.getElement(_1, jq),
                 el2 = this.getElement(_2, jq),
                 x1 = el1.offset().left + el1.width() + 20 + 1, // + left padding + border width
@@ -80,7 +80,7 @@
             var angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
             var transform = 'rotate(' + angle + 'deg)';
 
-            var line = $('<div context-menu data-target="menu-' + id + '">')
+            var line = $('<div>')
                 .appendTo(this.container)
                 .addClass('line')
                 .css({
@@ -94,7 +94,13 @@
                 .attr("id", id)
                 .width(length);
 
-
+            if (addContextMenu)
+            {
+                line.attr({
+                    'data-target': 'menu-' + id,
+                    'context-menu': true
+                });
+            }
 
             this.drawCircle(x1, y1);
             this.drawCircle(x2, y2);

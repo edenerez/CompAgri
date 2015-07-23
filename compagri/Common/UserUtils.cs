@@ -8,7 +8,7 @@ namespace CompAgri.Common
 {
     public static class UserUtils
     {
-        public static User GetUser(HttpRequestMessage request)
+        public static User GetUser(this HttpRequestMessage request)
         {
             var token = GetUserToken(request);
 

@@ -26,8 +26,10 @@ namespace CompAgri
         public string Connection_Season_Limitation { get; set; }
         public string Connection_Measurement { get; set; }
         public Nullable<bool> Connection_IsDelete { get; set; }
+        public int Connection_Id_User { get; set; }
     
         public virtual Term Term { get; set; }
         public virtual Term Term1 { get; set; }
+        public virtual User User { get; set; }
     }
 }

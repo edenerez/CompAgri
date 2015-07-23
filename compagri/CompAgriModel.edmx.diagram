@@ -21,6 +21,7 @@
         <EntityTypeShape EntityType="DB_9BA48E_xmldbModel.UserProfilePermission" Width="1.5" PointX="9.625" PointY="4.875" />
         <AssociationConnector Association="DB_9BA48E_xmldbModel.FK_UserUserProfile" />
         <AssociationConnector Association="DB_9BA48E_xmldbModel.FK_UserProfileUserProfilePermission" />
+        <AssociationConnector Association="DB_9BA48E_xmldbModel.ConnectionUser" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

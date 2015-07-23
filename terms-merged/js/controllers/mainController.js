@@ -165,19 +165,21 @@
 
                                 connectionServer.addConnection(data).then(function (newConnection) {
                                     data = newConnection;
-                                    linkService.addLink({
+                                    link = {
                                         first: left,
                                         firstId: leftId,
                                         second: right,
                                         secondId: rightId,
-                                        connectionId: data.Connection_Id
-                                    });
+                                        connectionId: data.Connection_Id,
+                                        user_id: data.Connection_Id_User
+                                    };
+                                    linkService.addLink(link);
 
                                     var line = linkService.drawLine(left, right, data.Connection_Id, false); // and draw
 
                                     $compile(line)($scope);
 
-                                    buildContextMenu(data.Connection_Id);
+                                    buildContextMenu(link);
 
                                     $scope.resetConnecting(); // and clear state
                                 });
@@ -186,9 +188,9 @@
                     }
                     return true;
                 };
-                function buildContextMenu(id) {
+                function buildContextMenu(link) {
 
-                    var context = $('<div class="dropdown" style="position: fixed;z-index:999;cursor:pointer;" id="menu-' + id + '"><ul class="dropdown-menu" role="menu"><li><a class="pointer" role="menuitem" tabindex="1" ng-click="deleteConnection(' + id + ');">Delete Connection </a></li></ul></div> ');
+                    var context = $('<div class="dropdown" style="position: fixed;z-index:999;cursor:pointer;" id="menu-' + link.connectionId + '"><ul class="dropdown-menu" role="menu"><li><a class="pointer" ng-click="deleteConnection(' + link.connectionId + ')" role="menuitem" tabindex="1">Delete Connection </a></li></ul></div> ');
                     context.appendTo('body');
                     $compile(context)($scope);
                 }
@@ -227,7 +229,8 @@
                                 linkService.addLink({
                                     firstId: item.Connection_Left_Tree_Id + ":" + item.Connection_Left_Term_Id,
                                     secondId: item.Connection_Right_Tree_Id + ":" + item.Connection_Right_Term_Id,
-                                    connectionId: item.Connection_Id
+                                    connectionId: item.Connection_Id,
+                                    user_id: item.Connection_Id_User
                                 });
                             });
 
@@ -299,9 +302,9 @@
 
 
                                 var line = linkService.drawLine(treeVisible(link.firstId, '_left') ? treeService.getNode(link.firstId, 'left') : treeService.getNode(link.secondId, 'left'),
-                                          treeVisible(link.secondId, '_right') ? treeService.getNode(link.secondId, 'right') : treeService.getNode(link.firstId, 'right'), link.connectionId, true);
+                                          treeVisible(link.secondId, '_right') ? treeService.getNode(link.secondId, 'right') : treeService.getNode(link.firstId, 'right'), link.connectionId, true, link.user_id == loginService.getUser().User_Id);
                                 $compile(line)($scope);
-                                buildContextMenu(link.connectionId);
+                                buildContextMenu(link);
 
                             }
                         }

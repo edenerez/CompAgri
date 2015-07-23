@@ -14,6 +14,11 @@ namespace CompAgri
     
     public partial class User
     {
+        public User()
+        {
+            this.Connections = new HashSet<Connection>();
+        }
+    
         public int User_Id { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
@@ -25,5 +30,6 @@ namespace CompAgri
         public string UserName { get; set; }
     
         public virtual UserProfile UserProfile { get; set; }
+        public virtual ICollection<Connection> Connections { get; set; }
     }
 }

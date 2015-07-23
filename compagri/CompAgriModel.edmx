@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="DB_9BA48E_xmldbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DB_9BA48E_xmldbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Connection">
           <Key>
             <PropertyRef Name="Connection_Id" />
@@ -21,6 +21,7 @@
           <Property Name="Connection_Season_Limitation" Type="nvarchar" MaxLength="512" />
           <Property Name="Connection_Measurement" Type="nvarchar" MaxLength="256" />
           <Property Name="Connection_IsDelete" Type="bit" />
+          <Property Name="Connection_Id_User" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Property">
           <Key>
@@ -109,6 +110,18 @@
             </Principal>
             <Dependent Role="Connection">
               <PropertyRef Name="Connection_Right_Term_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ConnectionUser">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Connection" Type="Self.Connection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Connection">
+              <PropertyRef Name="Connection_Id_User" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -201,6 +214,10 @@
             <End Role="Term" EntitySet="Term" />
             <End Role="Connection" EntitySet="Connection" />
           </AssociationSet>
+          <AssociationSet Name="FK_ConnectionUser" Association="Self.FK_ConnectionUser">
+            <End Role="User" EntitySet="User" />
+            <End Role="Connection" EntitySet="Connection" />
+          </AssociationSet>
           <AssociationSet Name="FK_Property_Term" Association="Self.FK_Property_Term">
             <End Role="Term" EntitySet="Term" />
             <End Role="Property" EntitySet="Property" />
@@ -248,6 +265,8 @@
           <Property Name="Connection_IsDelete" Type="Boolean" />
           <NavigationProperty Name="Term" Relationship="Self.FK_Connection_Term" FromRole="Connection" ToRole="Term" />
           <NavigationProperty Name="Term1" Relationship="Self.FK_Connection_Term1" FromRole="Connection" ToRole="Term" />
+          <NavigationProperty Name="User" Relationship="DB_9BA48E_xmldbModel.ConnectionUser" FromRole="Connection" ToRole="User" />
+          <Property Name="Connection_Id_User" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Property">
           <Key>
@@ -405,6 +424,10 @@
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="UserProfilePermission" EntitySet="UserProfilePermission" />
           </AssociationSet>
+          <AssociationSet Name="ConnectionUser" Association="DB_9BA48E_xmldbModel.ConnectionUser">
+            <End Role="Connection" EntitySet="Connection" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -420,6 +443,7 @@
           <Property Name="UserProfile_Id" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="UserProfile" Relationship="DB_9BA48E_xmldbModel.FK_UserUserProfile" FromRole="User" ToRole="UserProfile" />
+          <NavigationProperty Name="Connections" Relationship="DB_9BA48E_xmldbModel.ConnectionUser" FromRole="User" ToRole="Connection" />
         </EntityType>
         <EntityType Name="UserProfile">
           <Key>
@@ -467,6 +491,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="ConnectionUser">
+          <End Type="DB_9BA48E_xmldbModel.Connection" Role="Connection" Multiplicity="*" />
+          <End Type="DB_9BA48E_xmldbModel.User" Role="User" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Connection">
+              <PropertyRef Name="Connection_Id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -476,7 +512,8 @@
     <EntitySetMapping Name="Connection">
       <EntityTypeMapping TypeName="IsTypeOf(DB_9BA48E_xmldbModel.Connection)">
         <MappingFragment StoreEntitySet="Connection">
-          <ScalarProperty Name="Connection_Id" ColumnName="Connection_Id" />
+          <ScalarProperty Name="Connection_Id_User" ColumnName="Connection_Id_User" />
+                <ScalarProperty Name="Connection_Id" ColumnName="Connection_Id" />
           <ScalarProperty Name="Connection_Left_Term_Id" ColumnName="Connection_Left_Term_Id" />
           <ScalarProperty Name="Connection_Right_Term_Id" ColumnName="Connection_Right_Term_Id" />
           <ScalarProperty Name="Connection_Name" ColumnName="Connection_Name" />

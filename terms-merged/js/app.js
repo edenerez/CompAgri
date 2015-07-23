@@ -34,7 +34,7 @@
     })
     .controller('AppController', AppController);
 
-    function AppController($scope, loginService) {
+    function AppController($scope, $location, loginService) {
 
         $scope.isLogedIn = function () {
             return loginService.getUser();

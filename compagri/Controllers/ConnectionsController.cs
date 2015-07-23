@@ -1,3 +1,4 @@
+using CompAgri.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace CompAgri.Controllers
         {
             var term = Models.Terms.Term.Find(termId);
 
-            if(term == null)
+            if (term == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
             return term.GetConnections();
@@ -53,13 +54,14 @@ namespace CompAgri.Controllers
 
         public Models.Terms.Connection Post([FromBody] Models.Terms.Connection connection)
         {
+            connection.Connection_Id_User = Request.GetUser().User_Id;
             connection.Save();
             return connection;
         }
 
         public void Delete(int id)
         {
-            Models.Terms.Connection.Delete(new Models.Terms.Connection { Connection_Id = id });
+            Models.Terms.Connection.Delete(new Models.Terms.Connection { Connection_Id = id }, Request.GetUser());
         }
     }
 }

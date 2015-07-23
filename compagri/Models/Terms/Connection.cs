@@ -4,6 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
+using System.Web.Http;
+using System.Net;
+using CompAgri.Common;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace CompAgri.Models.Terms
 {
@@ -54,6 +59,7 @@ namespace CompAgri.Models.Terms
         public string Connection_Climate_Limitation { get; set; }
         public string Connection_Season_Limitation { get; set; }
         public string Connection_Measurement { get; set; }
+        public int Connection_Id_User { get; set; }
         public bool Connection_IsDelete { get; set; }
         public Connection Save()
         {
@@ -72,6 +78,7 @@ INSERT INTO [Connection]
            ,[Connection__Amount_Limitation]
            ,[Connection_Climate_Limitation]
            ,[Connection_Season_Limitation]
+           ,[Connection_Id_User]
            ,[Connection_Measurement])
      VALUES
            (@Connection_Left_Term_Id
@@ -83,6 +90,7 @@ INSERT INTO [Connection]
            ,@Connection__Amount_Limitation
            ,@Connection_Climate_Limitation
            ,@Connection_Season_Limitation
+           ,@Connection_Id_User
            ,@Connection_Measurement);
 
 SELECT CAST(SCOPE_IDENTITY() as int);", this);
@@ -100,6 +108,7 @@ UPDATE [Connection]
       ,[Connection_Climate_Limitation] = @Connection_Climate_Limitation
       ,[Connection_Season_Limitation] = @Connection_Season_Limitation
       ,[Connection_Measurement] = @Connection_Measurement
+      ,[Connection_Id_User] = @Connection_Id_User
       ,[Connection_IsDelete] = @Connection_IsDelete, bit,>
  WHERE Connection_Id = @Connection_Id", this);
             }
@@ -134,15 +143,25 @@ UPDATE [Connection]
             }
         }
 
-        public static void Delete(Connection connection)
+        public static void Delete(Connection connection, User loggedUser)
         {
             using (var db = Database)
             {
+                if (!IsCreatorWhoDeletes(connection, loggedUser))
+                {
+                    throw new HttpResponseException(HttpStatusCode.Forbidden);
+                }
                 if (connection.Connection_Id > 0)
                 {
                     db.Execute(@"UPDATE [Connection] SET [Connection_IsDelete] = 1 WHERE Connection_Id = @Connection_Id", connection);
                 }
             }
+        }
+
+        private static bool IsCreatorWhoDeletes(Connection connection, User loggedUser)
+        {
+            var connectionFromDatabase = Connection.Find(connection.Connection_Id);
+            return connectionFromDatabase.Connection_Id_User == loggedUser.User_Id;
         }
     }
 }
