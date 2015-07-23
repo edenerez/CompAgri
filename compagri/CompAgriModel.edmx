@@ -70,6 +70,7 @@
           <Property Name="UserProfile_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProfileName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="CanLikeContributorConnection" Type="bit" />
+          <Property Name="CanDeleteOtherPeopleConnection" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="UserProfilePermission">
           <Key>
@@ -454,6 +455,7 @@
           <Property Name="CanLikeContributorConnection" Type="Boolean" />
           <NavigationProperty Name="User" Relationship="DB_9BA48E_xmldbModel.FK_UserUserProfile" FromRole="UserProfile" ToRole="User" />
           <NavigationProperty Name="UserProfilePermission" Relationship="DB_9BA48E_xmldbModel.FK_UserProfileUserProfilePermission" FromRole="UserProfile" ToRole="UserProfilePermission" />
+          <Property Name="CanDeleteOtherPeopleConnection" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="UserProfilePermission">
           <Key>
@@ -583,6 +585,7 @@
           <EntitySetMapping Name="UserProfile">
             <EntityTypeMapping TypeName="DB_9BA48E_xmldbModel.UserProfile">
               <MappingFragment StoreEntitySet="UserProfile">
+                <ScalarProperty Name="CanDeleteOtherPeopleConnection" ColumnName="CanDeleteOtherPeopleConnection" />
                 <ScalarProperty Name="CanLikeContributorConnection" ColumnName="CanLikeContributorConnection" />
                 <ScalarProperty Name="ProfileName" ColumnName="ProfileName" />
                 <ScalarProperty Name="UserProfile_Id" ColumnName="UserProfile_Id" />

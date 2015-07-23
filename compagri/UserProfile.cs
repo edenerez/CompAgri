@@ -23,6 +23,7 @@ namespace CompAgri
         public int UserProfile_Id { get; set; }
         public string ProfileName { get; set; }
         public Nullable<bool> CanLikeContributorConnection { get; set; }
+        public bool CanDeleteOtherPeopleConnection { get; set; }
     
         public virtual ICollection<User> User { get; set; }
         public virtual ICollection<UserProfilePermission> UserProfilePermission { get; set; }
