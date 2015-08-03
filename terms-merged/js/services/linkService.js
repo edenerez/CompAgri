@@ -1,5 +1,5 @@
 ﻿angular.module('TermsDataEntry')
-.factory('linkService', function () {
+.factory('linkService', function (treeService) {
     return {
         links: [],
 
@@ -62,6 +62,17 @@
             }
         },
 
+        addTooltipToLink: function addTooltipToLink(line, link) {
+            var term1 = link.first || (link.first = treeService.getNode(link.firstId));
+            var term2 = link.second || (link.second = treeService.getNode(link.secondId));
+            line.tooltip({
+                html: true,
+                container: this.container,
+                title: '<b>' + link.data.Connection_Name + '</b><br>'
+                    + term1.scope().$nodeScope.$modelValue.title + ' - ' + term2.scope().$nodeScope.$modelValue.title
+            });
+        },
+
         /**
          * Draw a line between two elements with two dots at the ends
          * @param _1 first jqLite/jquery element
@@ -94,8 +105,7 @@
                 .attr("id", id)
                 .width(length);
 
-            if (addContextMenu)
-            {
+            if (addContextMenu) {
                 line.attr({
                     'data-target': 'menu-' + id,
                     'context-menu': true

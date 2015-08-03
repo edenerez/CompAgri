@@ -171,12 +171,13 @@
                                         second: right,
                                         secondId: rightId,
                                         connectionId: data.Connection_Id,
+                                        data: data,
                                         user_id: data.Connection_Id_User
                                     };
                                     linkService.addLink(link);
 
                                     var line = linkService.drawLine(left, right, data.Connection_Id, false); // and draw
-
+                                    linkService.addTooltipToLink(line, link);
                                     $compile(line)($scope);
 
                                     buildContextMenu(link);
@@ -230,6 +231,7 @@
                                     firstId: item.Connection_Left_Tree_Id + ":" + item.Connection_Left_Term_Id,
                                     secondId: item.Connection_Right_Tree_Id + ":" + item.Connection_Right_Term_Id,
                                     connectionId: item.Connection_Id,
+                                    data: item,
                                     user_id: item.Connection_Id_User
                                 });
                             });
@@ -300,9 +302,11 @@
                             link = linkService.links[l];
                             if ($scope.shouldShowLink(link)) {
 
+                                var firstEnd = treeVisible(link.firstId, '_left') ? treeService.getNode(link.firstId, 'left') : treeService.getNode(link.secondId, 'left');
+                                var secondEnd = treeVisible(link.secondId, '_right') ? treeService.getNode(link.secondId, 'right') : treeService.getNode(link.firstId, 'right');
 
-                                var line = linkService.drawLine(treeVisible(link.firstId, '_left') ? treeService.getNode(link.firstId, 'left') : treeService.getNode(link.secondId, 'left'),
-                                          treeVisible(link.secondId, '_right') ? treeService.getNode(link.secondId, 'right') : treeService.getNode(link.firstId, 'right'), link.connectionId, true, link.user_id == loginService.getUser().User_Id);
+                                var line = linkService.drawLine(firstEnd, secondEnd, link.connectionId, true, link.user_id == loginService.getUser().User_Id);
+                                linkService.addTooltipToLink(line, link);
                                 $compile(line)($scope);
                                 buildContextMenu(link);
 

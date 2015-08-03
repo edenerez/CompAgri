@@ -17,7 +17,7 @@
          */
         getNode: function getNode(id, tabsetId) {
             var ids = id.split(':'),
-                tree = this.getTreeFromId(id, tabsetId),
+                tree = this.getTreeFromId(id, tabsetId || 'left'),
                 node = tree.find('[data-id="' + ids[1] + '"]')
             return node;
         },
