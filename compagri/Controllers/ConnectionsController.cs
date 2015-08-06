@@ -52,6 +52,7 @@ namespace CompAgri.Controllers
             return Models.Terms.Connection.Find(id);
         }
 
+        [Common.CSVLogger.ActionLogger(description: "A connection was added")]
         public Models.Terms.Connection Post([FromBody] Models.Terms.Connection connection)
         {
             connection.Connection_Id_User = Request.GetUser().User_Id;
@@ -59,6 +60,7 @@ namespace CompAgri.Controllers
             return connection;
         }
 
+        [Common.CSVLogger.ActionLogger(description: "Deleted a connection")]
         public void Delete(int id)
         {
             Models.Terms.Connection.Delete(new Models.Terms.Connection { Connection_Id = id }, Request.GetUser());

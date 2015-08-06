@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompAgri", "CompAgri\CompAgri.csproj", "{762ECCBE-09FC-402C-A45D-40B6E6AC369D}"
 EndProject
@@ -27,8 +27,6 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "terms-merged", "http://loca
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompagriTester", "CompagriTester\CompagriTester.csproj", "{7355F672-7704-4AE7-A19D-21C975CBB977}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,10 +41,6 @@ Global
 		{5035B510-9289-42BB-8F3E-351D9C708BA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5035B510-9289-42BB-8F3E-351D9C708BA4}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{5035B510-9289-42BB-8F3E-351D9C708BA4}.Release|Any CPU.Build.0 = Debug|Any CPU
-		{7355F672-7704-4AE7-A19D-21C975CBB977}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7355F672-7704-4AE7-A19D-21C975CBB977}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7355F672-7704-4AE7-A19D-21C975CBB977}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7355F672-7704-4AE7-A19D-21C975CBB977}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

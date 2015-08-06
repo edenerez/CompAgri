@@ -29,7 +29,7 @@
 
          logout: function () {
              if (this.getUser()) {
-                 return $http.delete(apiLocation + 'Login').then(this.cleanUserData);
+                 return $http.delete(apiLocation + 'Login').then(this.cleanUserData.bind(this));
              } else {
                  return $q.defer().resolve().promise;
              }
@@ -37,6 +37,7 @@
 
          cleanUserData: function cleanUserData() {
              window.sessionStorage.removeItem(SESSION_KEY);
+             delete this.user;
          }
      }
 

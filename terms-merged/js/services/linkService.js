@@ -18,14 +18,18 @@
          * @param link link
          */
         removeLink: function removeLink(id) {
-            var newLinks = [];
-            this.links.forEach(function (link) {
-                if (link.connectionId != id) {
-                    newLinks.push(link);
-                }
-            });
+            var index = null;
 
-            this.links = angular.copy(newLinks);
+            for (var i = 0; i < this.links.length; i++) {
+                if(this.links[i] && this.links[i].connectionId == id){
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index !== null) {
+                this.links.splice(index, 1);
+            }
         },
         /**
          * Find if there is a link between two items and return it

@@ -7,21 +7,19 @@
                 templateUrl: './templates/login.html',
                 controller: 'loginController',
                 controllerAs: 'login'
+            }).when('/login', {
+                redirectTo: '/'
             })
-      .when('/Main', {
-          templateUrl: './templates/main.html',
-          controller: 'MainController',
-          controllerAs: 'main'
-      })
-      .when('/uploadXml', {
-          templateUrl: './templates/uploadFile.html',
-          controller: 'UploadFileController',
-          controllerAs: 'upload'
-      })
-            .when('/logout', {
-                templateUrl: './templates/login.html',
-                controller: 'logoutController'
-            })
+          .when('/Main', {
+              templateUrl: './templates/main.html',
+              controller: 'MainController',
+              controllerAs: 'main'
+          })
+          .when('/uploadXml', {
+              templateUrl: './templates/uploadFile.html',
+              controller: 'UploadFileController',
+              controllerAs: 'upload'
+          })
         .otherwise({
             redirectTo: '/'
         });
@@ -42,10 +40,24 @@
 
         $scope.logout = function logout() {
             loginService.logout().then(function () {
-                $location.path('/')
+                $location.path('/login');
             }, function () {
+                $location.path('/login')
                 $scope.error = 'Logout failure';
             });
         }
+
+        $scope.$on('$routeChangeStart', function (event, next) {
+            if ($scope.isLogedIn()) {
+                if (next.$$route && next.$$route.controllerAs == 'login') {
+                    event.preventDefault();
+                }
+            } else {
+                if ((!next.$$route || next.$$route.controllerAs != 'login') && next.redirectTo != '/') {
+                    event.preventDefault();
+                    $location.path('/login');
+                }
+            }
+        });
     }
 }());

@@ -14,6 +14,7 @@ namespace CompAgri.Controllers
     [Common.AuthorizeFilter]
     public class UploadXmlController : ApiController
     {
+        [Common.CSVLogger.ActionLogger(description: "Uploaded a Tree")]
         public void Post()
         {
             var httpRequest = HttpContext.Current.Request;

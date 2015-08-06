@@ -112,6 +112,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Logs\userActivities.csv" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -127,7 +128,12 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Bll\CompAgriBll.cs" />
     <Compile Include="Common\CompAgriConnection.cs" />
+    <Compile Include="Common\CSVLogger\ActionLogger.cs" />
+    <Compile Include="Common\CSVLogger\CSVLogger.cs" />
+    <Compile Include="Common\CSVLogger\CSVLog.cs" />
+    <Compile Include="Common\CSVLogger\ctor.cs" />
     <Compile Include="Common\DataHelper.cs" />
+    <Compile Include="Common\IPUtils.cs" />
     <Compile Include="Common\PasswordUtils.cs" />
     <Compile Include="Common\RandomWordGenerator.cs" />
     <Compile Include="Common\TokenUtils.cs" />

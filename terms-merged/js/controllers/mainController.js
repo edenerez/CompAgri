@@ -176,7 +176,7 @@
                                     };
                                     linkService.addLink(link);
 
-                                    var line = linkService.drawLine(left, right, data.Connection_Id, false); // and draw
+                                    var line = linkService.drawLine(left, right, data.Connection_Id, false, link.user_id == loginService.getUser().User_Id); // and draw
                                     linkService.addTooltipToLink(line, link);
                                     $compile(line)($scope);
 

@@ -48,6 +48,7 @@ namespace CompAgri.Controllers
                 {
                     userFromDatabase.Token = TokenUtils.GenerateToken();
                     db.SaveChanges();
+                    LogUserLogged(userFromDatabase);
 
                     var userToSend = new UserDto(userFromDatabase, true);
                     return userToSend;
@@ -75,6 +76,7 @@ namespace CompAgri.Controllers
             }
         }
 
+        [Common.CSVLogger.ActionLogger(description: "User logged out")]
         public void Delete()
         {
             string token = UserUtils.GetUserToken(Request);
@@ -95,6 +97,21 @@ namespace CompAgri.Controllers
                 user.Token = null;
                 db.SaveChanges();
             }
+        }
+        
+        private void LogUserLogged(User user)
+        {
+
+            Common.CSVLogger.CSVLogger.Instance.Log(new Common.CSVLogger.CSVLog
+            {
+                Action = ActionContext.ActionDescriptor.ActionName,
+                Controller = ActionContext.ControllerContext.ControllerDescriptor.ControllerName,
+                Date = DateTime.UtcNow,
+                Description = "User Logged in",
+                IP = IPUtils.GetClientIp(Request),
+                UserEmail = user.Email,
+                Username = user.UserName
+            });
         }
     }
 }
