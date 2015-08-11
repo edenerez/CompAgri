@@ -17,7 +17,7 @@ namespace CompAgri.Models
             this.children = term.Childen;
             this.parents = term.Parents;
             this.connectedTerms = term.GetConnectedTerms();
-
+            this.connections = term.GetConnections();
         }
 
         public Terms.Term term { get; set; }
@@ -29,5 +29,7 @@ namespace CompAgri.Models
         public IEnumerable<Terms.Term> parents { get; set; }
 
         public IEnumerable<Terms.Term> connectedTerms { get; set; }
+
+        public IEnumerable<Terms.Connection> connections { get; set; }
     }
 }

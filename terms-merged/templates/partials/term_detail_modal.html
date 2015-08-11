@@ -21,15 +21,17 @@
             </div>
         </div>
 
-        <div class="row bottom-margin">
-            <div class="col-md-3"><b>Connected with:</b> </div>
-            <div class="col-md-9">
-                <button class="btn-link" ng-repeat="connected in details.connectedTerms" ng-click="loadTermDetails(connected.Term_Id)">{{connected.Term_Title}}</button>
+        <div class="panel panel-default connections">
+            <div class="panel-heading">Connections</div>
+            <div class="panel-body">
+                <div class="text-center connection" ng-repeat="connection in details.connections" ng-click="loadTermDetails(connection.otherTermId)">
+                    <b>{{connection.Connection_Name}}</b>
+                    <div>{{connection.term1.Term_Title}} &rarr; {{connection.term2.Term_Title}}</div>
+                </div>
 
-                <span ng-show="!details.connectedTerms.length">No Terms</span>
+                <div class="text-center" ng-show="!(details.connections && details.connections.length)">No Connections</div>
             </div>
         </div>
-
     </div>
 
     <div class="panel panel-default">
