@@ -182,5 +182,15 @@ namespace CompAgri.Models.Terms
                 return db.Query<Term>("SELECT * FROM [Term] WHERE Term_Id IN (SELECT DISTINCT Connection_Right_Term_Id FROM [Connection] WHERE Connection_Left_Term_Id = @Term_Id UNION SELECT DISTINCT Connection_Left_Term_Id FROM [Connection] WHERE Connection_Right_Term_Id = @Term_Id)", this);
             }
         }
+
+        internal static IEnumerable<Term> FindMatching(string toMatch, int? treeId)
+        {
+            var query = "SELECT * FROM [Term] where Term_Title LIKE CONCAT('%', @toMatch, '%') AND (@treeId IS NULL OR Term_XmlFile_id=@treeId)";
+
+            using (var db = Database)
+            {
+                return db.Query<Term>(query, new { toMatch = toMatch, treeId = treeId });
+            }
+        }
     }
 }

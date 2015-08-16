@@ -1,5 +1,5 @@
 ﻿angular.module('TermsDataEntry')
-.controller("TermDetailsModalCtrl", function ($scope, $modalInstance, termDetailsServer, term) {
+.controller("TermDetailsModalCtrl", function ($scope, $modalInstance, termServer, nodeServer, treeService, term) {
 
     $scope.term = term;
 
@@ -13,9 +13,9 @@
     };
 
     $scope.loadTermDetails = function loadTermDetails(termId) {
-        termDetailsServer.getTermDetails(termId).then(function (details) {
+        termServer.getTermDetails(termId).then(function (details) {
             $scope.details = details;
-            
+
             var termDictionary = {};
 
             termDictionary[details.term.Term_Id] = details.term;
@@ -34,6 +34,37 @@
             });
         });
     };
+
+    $scope.getPosibleParents = function getPosibleParents(toMatch) {
+        $scope.writting = true;
+        if ($scope.details) {
+            return termServer.getMatchingTerms(toMatch, $scope.details.term.Term_XmlFile_id)
+        }
+    };
+
+    $scope.addParent = function addParent() {
+        if ($scope.newParent) {
+            nodeServer.moveNode($scope.details.term.Term_XmlFile_id, $scope.details.term.Term_Id, 0, $scope.newParent.Term_Id).then(function (response) {
+                //var leftParent = treeService.getNode($scope.newParent.Term_XmlFile_id + ':' + $scope.newParent.Term_Id, 'left');
+                //var rightParent = treeService.getNode($scope.newParent.Term_XmlFile_id + ':' + $scope.newParent.Term_Id, 'right');
+
+                //var leftChild = treeService.getNode($scope.details.term.Term_XmlFile_id + ':' + $scope.details.term.Term_Id, 'left');
+                //var rightChild = treeService.getNode($scope.details.term.Term_XmlFile_id + ':' + $scope.details.term.Term_Id, 'right');
+
+                //leftParent.scope().$nodeScope.$modelValue.items.push(leftChild.scope().$nodeScope.$modelValue);
+                //rightParent.scope().$nodeScope.$modelValue.items.push(rightChild.scope().$nodeScope.$modelValue);
+                $scope.details.parents.push($scope.newParent);
+            }).then(function () {
+                $scope.writting = false;
+                $scope.newParent = undefined;
+                $scope.isAddingParent = false;
+            });
+        } else {
+            $scope.writting = false;
+            $scope.newParent = undefined;
+            $scope.isAddingParent = false;
+        }
+    }
 
     $scope.loadTermDetails(term.id);
 

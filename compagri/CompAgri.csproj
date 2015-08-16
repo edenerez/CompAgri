@@ -160,7 +160,7 @@
     <Compile Include="Controllers\ConnectionsController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\NodeController.cs" />
-    <Compile Include="Controllers\TermDetailsController.cs" />
+    <Compile Include="Controllers\TermController.cs" />
     <Compile Include="Controllers\TreeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UploadXmlController.cs" />

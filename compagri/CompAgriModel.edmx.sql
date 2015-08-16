@@ -8,7 +8,7 @@
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [XMLDB];
+USE [DB_9BA48E_xmldb];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -16,12 +16,14 @@ GO
 -- --------------------------------------------------
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
-
-IF OBJECT_ID(N'[dbo].[FK_UserUserProfile]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[User] DROP CONSTRAINT [FK_UserUserProfile];
+IF OBJECT_ID(N'[dbo].[FK_ConnectionUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Connection] DROP CONSTRAINT [FK_ConnectionUser];
 GO
 IF OBJECT_ID(N'[dbo].[FK_UserProfileUserProfilePermission]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[UserProfilePermission] DROP CONSTRAINT [FK_UserProfileUserProfilePermission];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserUserProfile]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[User] DROP CONSTRAINT [FK_UserUserProfile];
 GO
 
 -- --------------------------------------------------
@@ -41,18 +43,17 @@ GO
 -- --------------------------------------------------
 -- Creating all tables
 -- --------------------------------------------------
-
 -- Creating table 'User'
 CREATE TABLE [dbo].[User] (
     [User_Id] int IDENTITY(1,1) NOT NULL,
-    [UserName] nvarchar(max)  NULL,
     [Name] nvarchar(max)  NULL,
     [LastName] nvarchar(max)  NULL,
     [Email] nvarchar(max)  NULL,
     [Password] nvarchar(max)  NOT NULL,
     [PasswordSalt] nvarchar(max)  NOT NULL,
     [Token] nvarchar(max)  NULL,
-    [UserProfile_Id] int  NOT NULL
+    [UserProfile_Id] int  NOT NULL,
+    [UserName] nvarchar(max)  NULL
 );
 GO
 
@@ -60,7 +61,8 @@ GO
 CREATE TABLE [dbo].[UserProfile] (
     [UserProfile_Id] int IDENTITY(1,1) NOT NULL,
     [ProfileName] nvarchar(max)  NOT NULL,
-    [CanLikeContributorConnection] bit  NULL
+    [CanLikeContributorConnection] bit  NULL,
+    [CanDeleteOtherPeopleConnection] bit  NOT NULL
 );
 GO
 
@@ -129,6 +131,15 @@ GO
 CREATE INDEX [IX_FK_UserProfileUserProfilePermission]
 ON [dbo].[UserProfilePermission]
     ([UserProfile_Id]);
+GO
+
+-- Creating foreign key on [Connection_Id_User] in table 'Connection'
+ALTER TABLE [dbo].[Connection]
+ADD CONSTRAINT [FK_ConnectionUser]
+    FOREIGN KEY ([Connection_Id_User])
+    REFERENCES [dbo].[User]
+        ([User_Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 -- --------------------------------------------------

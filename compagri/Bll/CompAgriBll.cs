@@ -38,7 +38,10 @@ namespace CompAgri.Bll
         {
             return DataHelper.TermDetails(termId);
         }
-        
 
+        internal static IEnumerable<Models.Terms.Term> GetMatchingTerms(string toMatch, int? treeId)
+        {
+            return DataHelper.GetMatchingTerms(treeId, toMatch);
+        }
     }
 }

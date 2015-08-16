@@ -5,26 +5,44 @@
 
     <div class="term-relations">
 
-        <div class="row bottom-margin">
-            <div class="col-md-3"><b>Father of:</b> </div>
-            <div class="col-md-9">
-                <button class="btn-link" ng-repeat="child in details.children" ng-click="loadTermDetails(child.Term_Id)">{{child.Term_Title}}</button>
-                <span ng-show="!details.children.length">No Terms</span>
+        <div class="panel panel-default element-container">
+            <div class="panel-heading">Father of</div>
+            <div class="panel-body">
+                <div class="text-center element" ng-repeat="child in details.children" ng-click="loadTermDetails(child.Term_Id)">
+                    <b>{{child.Term_Title}}</b>
+                </div>
+
+                <div class="text-center" ng-show="!(details.children && details.children.length)">No Terms</div>
             </div>
         </div>
 
-        <div class="row bottom-margin">
-            <div class="col-md-3"><b>Son of:</b> </div>
-            <div class="col-md-9">
-                <button class="btn-link" ng-repeat="parent in details.parents" ng-click="loadTermDetails(parent.Term_Id)">{{parent.Term_Title}}</button>
-                <span ng-show="!details.parents.length">No Terms</span>
+        <div class="panel panel-default element-container parents">
+            <div class="panel-heading">Son of</div>
+            <div class="panel-body">
+                <div class="text-center element" ng-repeat="parent in details.parents" ng-click="loadTermDetails(parent.Term_Id)">
+                    <b>{{parent.Term_Title}}</b>
+                </div>
+
+                <div class="text-center" ng-show="!(details.parents && details.parents.length)">No Terms</div>
+                <button class="btn btn-default btn-xs bottom-right" ng-click="isAddingParent = !isAddingParent; writting = false">{{ !isAddingParent ? 'Add Parent' : 'Cancel'}}</button>
+            </div>
+            <div class="panel-footer" ng-class="{closed: !isAddingParent, open: isAddingParent, writting: writting }">
+
+                <div class="col-xs-12">
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="newParent" typeahead="term as term.Term_Title for term in getPosibleParents($viewValue) | limitTo:8" placeholder="Parent name">
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" ng-click="addParent()">Add</button>
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="panel panel-default connections">
+        <div class="panel panel-default element-container">
             <div class="panel-heading">Connections</div>
             <div class="panel-body">
-                <div class="text-center connection" ng-repeat="connection in details.connections" ng-click="loadTermDetails(connection.otherTermId)">
+                <div class="text-center element" ng-repeat="connection in details.connections" ng-click="loadTermDetails(connection.otherTermId)">
                     <b>{{connection.Connection_Name}}</b>
                     <div>{{connection.term1.Term_Title}} &rarr; {{connection.term2.Term_Title}}</div>
                 </div>
@@ -52,3 +70,9 @@
 <div class="modal-footer">
     <button class="btn btn-primary" ng-click="close()">Close</button>
 </div>
+
+<!--<script type="text/ng-template" id="termTemplate.html">
+    <a>
+        <span bind-html-unsafe="match.Term_Title | typeaheadHighlight:query"></span>
+    </a>
+</script>-->

@@ -1,5 +1,5 @@
 
-.btn {
+.angular-ui-tree-handle .btn {
     margin-right: 8px;
 }
 
@@ -92,7 +92,7 @@ div.circle {
     margin-bottom: 10px;
 }
 
-.term-relations .connection {
+.term-relations .element {
     cursor: pointer;
     border: 1px solid #ddd;
     padding: 2px;
@@ -103,16 +103,58 @@ div.circle {
     background-color: #f5f5f5;
 }
 
-    .term-relations .connection b {
+    .term-relations .element b {
         font-size: 12px;
     }
 
-.term-relations .connections .panel-body {
+    .term-relations .element b {
+        font-size: 12px;
+    }
+
+
+.term-relations .element-container .panel-body {
     text-align: left;
+    position: relative;
 }
 
+.term-relations .element-container .panel-body .btn-xs.bottom-right {
+    position: absolute;
+    border-bottom-right-radius: 0;    
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+    bottom:0;
+    right:0px;
+    border-bottom:none;
+    border-right:none;
+}
+
+.term-relations .element-container * {
+    -moz-transition: all 0.5s ease-in;
+    -o-transition: all 0.5s ease-in;
+    -webkit-transition: all 0.5s ease-in;
+    transition: all 0.5s ease-in;
+}
+
+
+.term-relations .element-container.parents .panel-footer{
+    height:50px;
+    overflow-y: hidden;
+}
+
+.term-relations .element-container.parents .panel-footer.writting{
+    overflow-y: visible;
+}
+
+.term-relations .element-container.parents  .panel-footer.closed     {
+    height: 0;
+    padding-top: 0;
+    padding-bottom  : 0;
+    border: none;
+}
+
+
 @media (max-width: 970px) {
-    .term-relations .connections .panel-body {
+    .term-relations .element-container .panel-body {
         text-align: center;
     }
 }

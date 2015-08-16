@@ -257,6 +257,9 @@ namespace CompAgri.Common
             Models.Terms.T_Property.SaveMultiple(propList);
         }
 
-
+        internal static IEnumerable<Models.Terms.Term> GetMatchingTerms(int? treeId, string toMatch)
+        {
+            return Models.Terms.Term.FindMatching(toMatch, treeId);
+        }
     }
 }
