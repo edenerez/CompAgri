@@ -33,5 +33,6 @@ namespace CompAgri
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserProfile> UserProfile { get; set; }
         public virtual DbSet<UserProfilePermission> UserProfilePermission { get; set; }
+        public virtual DbSet<UserOpinion> UserOpinions { get; set; }
     }
 }

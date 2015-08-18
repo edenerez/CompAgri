@@ -83,7 +83,7 @@
          * @param _2 second jqLite/jquery element
          * @param jq - true if elements are jquery elements and false if jqLite elements
          */
-        drawLine: function drawLine(_1, _2, id, jq, addContextMenu) {
+        drawLine: function drawLine(_1, _2, id, jq, link, user) {
             var el1 = this.getElement(_1, jq),
                 el2 = this.getElement(_2, jq),
                 x1 = el1.offset().left + el1.width() + 20 + 1, // + left padding + border width
@@ -109,7 +109,7 @@
                 .attr("id", id)
                 .width(length);
 
-            if (addContextMenu) {
+            if (link.user_id == user.User_Id || user.UserProfile.CanLikeContributorConnection) {
                 line.attr({
                     'data-target': 'menu-' + id,
                     'context-menu': true

@@ -1,1 +1,5 @@
-Username;UserEmail;Description;Date;IP;Action;ControllerUsername;UserEmail;Description;Date;IP;Action;Controller
+Username;UserEmail;Description;Date;IP;Action;Controller
+User3;;User Logged in;18/08/2015 3:12:53;::1;Post;Login
+;;User logged out;18/08/2015 3:15:46;::1;Delete;Login
+;;User logged out;18/08/2015 3:15:46;::1;Delete;Login
+User3;;User Logged in;18/08/2015 3:15:55;::1;Post;Login

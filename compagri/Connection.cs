@@ -14,6 +14,11 @@ namespace CompAgri
     
     public partial class Connection
     {
+        public Connection()
+        {
+            this.UserOpinions = new HashSet<UserOpinion>();
+        }
+    
         public int Connection_Id { get; set; }
         public Nullable<int> Connection_Left_Term_Id { get; set; }
         public Nullable<int> Connection_Right_Term_Id { get; set; }
@@ -31,5 +36,6 @@ namespace CompAgri
         public virtual Term Term { get; set; }
         public virtual Term Term1 { get; set; }
         public virtual User User { get; set; }
+        public virtual ICollection<UserOpinion> UserOpinions { get; set; }
     }
 }

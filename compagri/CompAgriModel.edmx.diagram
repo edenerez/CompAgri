@@ -22,7 +22,10 @@
         <AssociationConnector Association="DB_9BA48E_xmldbModel.FK_UserUserProfile" />
         <AssociationConnector Association="DB_9BA48E_xmldbModel.FK_UserProfileUserProfilePermission" />
         <AssociationConnector Association="DB_9BA48E_xmldbModel.ConnectionUser" />
-      </Diagram>
+        <EntityTypeShape EntityType="DB_9BA48E_xmldbModel.UserOpinion" Width="1.5" PointX="11.875" PointY="2.25" />
+        <AssociationConnector Association="DB_9BA48E_xmldbModel.FK_ConnectionUserConnection_Opinion" />
+        <AssociationConnector Association="DB_9BA48E_xmldbModel.FK_UserUserConnectionOpinion" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

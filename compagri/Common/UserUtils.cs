@@ -17,9 +17,9 @@ namespace CompAgri.Common
                 return null;
             }
 
-            using (var db = new CompAgriConnection())
+            using (var db = new DB_9BA48E_xmldbEntities())
             {
-                return db.User.FirstOrDefault(u => u.Token == token);
+                return db.User.Include("UserProfile").FirstOrDefault(u => u.Token == token);
             }
         }
 

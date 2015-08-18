@@ -63,6 +63,15 @@
           <Property Name="UserProfile_Id" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="UserOpinions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User_Id" Type="int" Nullable="false" />
+          <Property Name="Connection_Id" Type="int" Nullable="false" />
+          <Property Name="Opinion" Type="bit" />
+        </EntityType>
         <EntityType Name="UserProfile">
           <Key>
             <PropertyRef Name="UserProfile_Id" />
@@ -126,6 +135,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ConnectionUserConnection_Opinion">
+          <End Role="Connection" Type="Self.Connection" Multiplicity="1" />
+          <End Role="UserOpinions" Type="Self.UserOpinions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Connection">
+              <PropertyRef Name="Connection_Id" />
+            </Principal>
+            <Dependent Role="UserOpinions">
+              <PropertyRef Name="Connection_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Property_Term">
           <End Role="Term" Type="Self.Term" Multiplicity="0..1" />
           <End Role="Property" Type="Self.Property" Multiplicity="*" />
@@ -186,6 +207,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserUserConnectionOpinion">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserOpinions" Type="Self.UserOpinions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="UserOpinions">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserUserProfile">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
@@ -204,6 +237,7 @@
           <EntitySet Name="Relation" EntityType="Self.Relation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Term" EntityType="Self.Term" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserOpinions" EntityType="Self.UserOpinions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfilePermission" EntityType="Self.UserProfilePermission" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="XmlFile" EntityType="Self.XmlFile" Schema="dbo" store:Type="Tables" />
@@ -218,6 +252,10 @@
           <AssociationSet Name="FK_ConnectionUser" Association="Self.FK_ConnectionUser">
             <End Role="User" EntitySet="User" />
             <End Role="Connection" EntitySet="Connection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ConnectionUserConnection_Opinion" Association="Self.FK_ConnectionUserConnection_Opinion">
+            <End Role="Connection" EntitySet="Connection" />
+            <End Role="UserOpinions" EntitySet="UserOpinions" />
           </AssociationSet>
           <AssociationSet Name="FK_Property_Term" Association="Self.FK_Property_Term">
             <End Role="Term" EntitySet="Term" />
@@ -238,6 +276,10 @@
           <AssociationSet Name="FK_UserProfileUserProfilePermission" Association="Self.FK_UserProfileUserProfilePermission">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="UserProfilePermission" EntitySet="UserProfilePermission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserUserConnectionOpinion" Association="Self.FK_UserUserConnectionOpinion">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserOpinions" EntitySet="UserOpinions" />
           </AssociationSet>
           <AssociationSet Name="FK_UserUserProfile" Association="Self.FK_UserUserProfile">
             <End Role="UserProfile" EntitySet="UserProfile" />
@@ -268,6 +310,7 @@
           <NavigationProperty Name="Term1" Relationship="Self.FK_Connection_Term1" FromRole="Connection" ToRole="Term" />
           <NavigationProperty Name="User" Relationship="DB_9BA48E_xmldbModel.ConnectionUser" FromRole="Connection" ToRole="User" />
           <Property Name="Connection_Id_User" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UserOpinions" Relationship="DB_9BA48E_xmldbModel.FK_ConnectionUserConnection_Opinion" FromRole="Connection" ToRole="UserOpinions" />
         </EntityType>
         <EntityType Name="Property">
           <Key>
@@ -429,6 +472,15 @@
             <End Role="Connection" EntitySet="Connection" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
+          <EntitySet Name="UserOpinions" EntityType="DB_9BA48E_xmldbModel.UserOpinion" />
+          <AssociationSet Name="FK_ConnectionUserConnection_Opinion" Association="DB_9BA48E_xmldbModel.FK_ConnectionUserConnection_Opinion">
+            <End Role="Connection" EntitySet="Connection" />
+            <End Role="UserOpinions" EntitySet="UserOpinions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserUserConnectionOpinion" Association="DB_9BA48E_xmldbModel.FK_UserUserConnectionOpinion">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserOpinions" EntitySet="UserOpinions" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -445,6 +497,7 @@
           <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="UserProfile" Relationship="DB_9BA48E_xmldbModel.FK_UserUserProfile" FromRole="User" ToRole="UserProfile" />
           <NavigationProperty Name="Connections" Relationship="DB_9BA48E_xmldbModel.ConnectionUser" FromRole="User" ToRole="Connection" />
+          <NavigationProperty Name="UserOpinions" Relationship="DB_9BA48E_xmldbModel.FK_UserUserConnectionOpinion" FromRole="User" ToRole="UserOpinions" />
         </EntityType>
         <EntityType Name="UserProfile">
           <Key>
@@ -502,6 +555,41 @@
             </Principal>
             <Dependent Role="Connection">
               <PropertyRef Name="Connection_Id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UserOpinion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_Id" Type="Int32" Nullable="false" />
+          <Property Name="Connection_Id" Type="Int32" Nullable="false" />
+          <Property Name="Opinion" Type="Boolean" />
+          <NavigationProperty Name="Connection" Relationship="DB_9BA48E_xmldbModel.FK_ConnectionUserConnection_Opinion" FromRole="UserOpinions" ToRole="Connection" />
+          <NavigationProperty Name="User" Relationship="DB_9BA48E_xmldbModel.FK_UserUserConnectionOpinion" FromRole="UserOpinions" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_ConnectionUserConnection_Opinion">
+          <End Type="DB_9BA48E_xmldbModel.Connection" Role="Connection" Multiplicity="1" />
+          <End Type="DB_9BA48E_xmldbModel.UserOpinion" Role="UserOpinions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Connection">
+              <PropertyRef Name="Connection_Id" />
+            </Principal>
+            <Dependent Role="UserOpinions">
+              <PropertyRef Name="Connection_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserUserConnectionOpinion">
+          <End Type="DB_9BA48E_xmldbModel.User" Role="User" Multiplicity="1" />
+          <End Type="DB_9BA48E_xmldbModel.UserOpinion" Role="UserOpinions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="UserOpinions">
+              <PropertyRef Name="User_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -601,6 +689,16 @@
                 <ScalarProperty Name="ActionName" ColumnName="ActionName" />
                 <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
                 <ScalarProperty Name="UserProfilePermission_Id" ColumnName="UserProfilePermission_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserOpinions">
+            <EntityTypeMapping TypeName="DB_9BA48E_xmldbModel.UserOpinion">
+              <MappingFragment StoreEntitySet="UserOpinions">
+                <ScalarProperty Name="Opinion" ColumnName="Opinion" />
+                <ScalarProperty Name="Connection_Id" ColumnName="Connection_Id" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

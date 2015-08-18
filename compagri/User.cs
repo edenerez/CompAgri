@@ -17,6 +17,7 @@ namespace CompAgri
         public User()
         {
             this.Connections = new HashSet<Connection>();
+            this.UserOpinions = new HashSet<UserOpinion>();
         }
     
         public int User_Id { get; set; }
@@ -31,5 +32,6 @@ namespace CompAgri
     
         public virtual UserProfile UserProfile { get; set; }
         public virtual ICollection<Connection> Connections { get; set; }
+        public virtual ICollection<UserOpinion> UserOpinions { get; set; }
     }
 }

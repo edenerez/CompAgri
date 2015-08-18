@@ -1,7 +1,7 @@
 ﻿(function () {
     angular.module('TermsDataEntry')
      .controller("MainController", MainController);
-    function MainController($scope, $modal, $location, $q, $compile, linkService, treeService, treeServer, loginService, connectionServer, nodeServer) {
+    function MainController($scope, $modal, $location, $q, $compile, linkService, treeService, treeServer, loginService, connectionServer, nodeServer, likeServer) {
 
         if (!loginService.getUser()) {
             $location.path('/login')
@@ -22,6 +22,17 @@
                 });
 
             };
+
+            $scope.likeConnection = function (id) {
+                likeServer.like(id);
+            };
+
+            $scope.unlikeConnection = function (id) {
+                likeServer.unlike(id);
+
+            };
+
+
             $scope.treeServer = treeServer;
 
             treeServer.getTrees().then(function (trees) {
@@ -176,7 +187,7 @@
                                     };
                                     linkService.addLink(link);
 
-                                    var line = linkService.drawLine(left, right, data.Connection_Id, false, link.user_id == loginService.getUser().User_Id); // and draw
+                                    var line = linkService.drawLine(left, right, data.Connection_Id, false, link, loginService.getUser()); // and draw
                                     linkService.addTooltipToLink(line, link);
                                     $compile(line)($scope);
 
@@ -191,7 +202,19 @@
                 };
                 function buildContextMenu(link) {
 
-                    var context = $('<div class="dropdown" style="position: fixed;z-index:999;cursor:pointer;" id="menu-' + link.connectionId + '"><ul class="dropdown-menu" role="menu"><li><a class="pointer" ng-click="deleteConnection(' + link.connectionId + ')" role="menuitem" tabindex="1">Delete Connection </a></li></ul></div> ');
+                    var context = $('<div class="dropdown" style="position: fixed;z-index:999;cursor:pointer;" id="menu-' + link.connectionId + '"><ul class="dropdown-menu" role="menu"></ul></div> ');
+                    var user = loginService.getUser();
+                    var list = context.find('ul');
+
+                    if (link.user_id == user.User_Id) {
+                        list.append('<li><a class="pointer" ng-click="deleteConnection(' + link.connectionId + ')" role="menuitem" tabindex="1">Delete Connection </a></li>');
+                    }
+
+                    if (user.UserProfile.CanLikeContributorConnection) {
+                        list
+                            .append('<li><a class="pointer" ng-click="likeConnection(' + link.connectionId + ')" role="menuitem" tabindex="1">Like Connection </a></li>')
+                            .append('<li><a class="pointer" ng-click="unlikeConnection(' + link.connectionId + ')" role="menuitem" tabindex="1">Unlike Connection </a></li>');
+                    }
                     context.appendTo('body');
                     $compile(context)($scope);
                 }
@@ -305,7 +328,7 @@
                                 var firstEnd = treeVisible(link.firstId, '_left') ? treeService.getNode(link.firstId, 'left') : treeService.getNode(link.secondId, 'left');
                                 var secondEnd = treeVisible(link.secondId, '_right') ? treeService.getNode(link.secondId, 'right') : treeService.getNode(link.firstId, 'right');
 
-                                var line = linkService.drawLine(firstEnd, secondEnd, link.connectionId, true, link.user_id == loginService.getUser().User_Id);
+                                var line = linkService.drawLine(firstEnd, secondEnd, link.connectionId, true, link, loginService.getUser());
                                 linkService.addTooltipToLink(line, link);
                                 $compile(line)($scope);
                                 buildContextMenu(link);

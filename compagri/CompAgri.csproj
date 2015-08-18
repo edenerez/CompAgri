@@ -112,7 +112,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Logs\userActivities.csv" />
+    <None Include="Properties\PublishProfiles\file.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -120,6 +120,7 @@
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="UploadXmlFile.aspx" />
+    <Content Include="UserConnectionOpinion.sql" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -158,6 +159,7 @@
       <DependentUpon>CompAgriModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\ConnectionsController.cs" />
+    <Compile Include="Controllers\LikeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\NodeController.cs" />
     <Compile Include="Controllers\TermController.cs" />
@@ -200,6 +202,9 @@
     <Compile Include="User.cs">
       <DependentUpon>CompAgriModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserOpinion.cs">
+      <DependentUpon>CompAgriModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="UserProfile.cs">
       <DependentUpon>CompAgriModel.tt</DependentUpon>
     </Compile>
@@ -240,6 +245,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Entities\" />
+    <Folder Include="Logs\" />
     <Folder Include="packages\EntityFramework.6.1.1\Content\" />
     <Folder Include="packages\EntityFramework.6.1.1\lib\net40\" />
     <Folder Include="packages\EntityFramework.6.1.1\lib\net45\" />
