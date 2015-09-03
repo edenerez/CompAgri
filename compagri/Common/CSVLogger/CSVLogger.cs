@@ -11,8 +11,9 @@ namespace CompAgri.Common.CSVLogger
     public class CSVLogger
     {
         public const string SEPARATOR = ";";
+        public string path;
         private static CSVLogger instance;
-        private string path;
+
         private CSVLogger()
             : this(ConfigurationManager.AppSettings["log-location"])
         {
@@ -21,7 +22,7 @@ namespace CompAgri.Common.CSVLogger
         private CSVLogger(string path)
         {
             this.path = HttpContext.Current.Server.MapPath(path);
-            if (!File.Exists(path))
+            if (!File.Exists(this.path))
             {
                 AddHeaderToLog();
             }

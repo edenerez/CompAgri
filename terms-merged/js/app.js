@@ -32,11 +32,21 @@
     })
     .controller('AppController', AppController);
 
-    function AppController($scope, $location, loginService) {
+    function AppController($scope, $location, loginService, logServer) {
 
-        $scope.isLogedIn = function () {
+        $scope.getUser = function () {
             return loginService.getUser();
         };
+
+        $scope.isLogedIn = function () {
+            return $scope.getUser();
+        };
+
+        $scope.downloadLog = function () {
+            if ($scope.isLogedIn() && $scope.getUser().UserProfile.CanDownloadFullLog) {
+                logServer.downloadLog(); 
+            }
+        }
 
         $scope.logout = function logout() {
             loginService.logout().then(function () {

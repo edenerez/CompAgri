@@ -24,6 +24,7 @@ namespace CompAgri
         public string ProfileName { get; set; }
         public Nullable<bool> CanLikeContributorConnection { get; set; }
         public bool CanDeleteOtherPeopleConnection { get; set; }
+        public bool CanDownloadFullLog { get; set; }
     
         public virtual ICollection<User> User { get; set; }
         public virtual ICollection<UserProfilePermission> UserProfilePermission { get; set; }

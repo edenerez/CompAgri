@@ -19,6 +19,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -89,6 +90,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AddCanDownloadFullLog.sql" />
     <Content Include="CompAgriModel.edmx.sql" />
     <Content Include="ConnectionAmountLimitation.view.create..sql" />
     <Content Include="ConnectionClimateLimitation.view.create..sql" />
@@ -132,7 +134,6 @@
     <Compile Include="Common\CSVLogger\ActionLogger.cs" />
     <Compile Include="Common\CSVLogger\CSVLogger.cs" />
     <Compile Include="Common\CSVLogger\CSVLog.cs" />
-    <Compile Include="Common\CSVLogger\ctor.cs" />
     <Compile Include="Common\DataHelper.cs" />
     <Compile Include="Common\IPUtils.cs" />
     <Compile Include="Common\PasswordUtils.cs" />
@@ -160,6 +161,7 @@
     </Compile>
     <Compile Include="Controllers\ConnectionsController.cs" />
     <Compile Include="Controllers\LikeController.cs" />
+    <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\NodeController.cs" />
     <Compile Include="Controllers\TermController.cs" />

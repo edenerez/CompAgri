@@ -80,6 +80,7 @@
           <Property Name="ProfileName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="CanLikeContributorConnection" Type="bit" />
           <Property Name="CanDeleteOtherPeopleConnection" Type="bit" Nullable="false" />
+          <Property Name="CanDownloadFullLog" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="UserProfilePermission">
           <Key>
@@ -509,6 +510,7 @@
           <NavigationProperty Name="User" Relationship="DB_9BA48E_xmldbModel.FK_UserUserProfile" FromRole="UserProfile" ToRole="User" />
           <NavigationProperty Name="UserProfilePermission" Relationship="DB_9BA48E_xmldbModel.FK_UserProfileUserProfilePermission" FromRole="UserProfile" ToRole="UserProfilePermission" />
           <Property Name="CanDeleteOtherPeopleConnection" Type="Boolean" Nullable="false" />
+          <Property Name="CanDownloadFullLog" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="UserProfilePermission">
           <Key>
@@ -673,6 +675,7 @@
           <EntitySetMapping Name="UserProfile">
             <EntityTypeMapping TypeName="DB_9BA48E_xmldbModel.UserProfile">
               <MappingFragment StoreEntitySet="UserProfile">
+                <ScalarProperty Name="CanDownloadFullLog" ColumnName="CanDownloadFullLog" />
                 <ScalarProperty Name="CanDeleteOtherPeopleConnection" ColumnName="CanDeleteOtherPeopleConnection" />
                 <ScalarProperty Name="CanLikeContributorConnection" ColumnName="CanLikeContributorConnection" />
                 <ScalarProperty Name="ProfileName" ColumnName="ProfileName" />

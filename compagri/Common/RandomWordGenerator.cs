@@ -9,7 +9,7 @@ namespace CompAgri.Common
 {
     public class RandomWordGenerator
     {
-        private static string DEFAULT_SALT_POSIBLE_CHARS = "ABCDEFGHIJKLMNÑOQRSTUWXYZabcefghijklmnñopqrstuwxyz1234567890,.-_:;";
+        private static string DEFAULT_SALT_POSIBLE_CHARS = "ABCDEFGHIJKLMNÑOQRSTUWXYZabcefghijklmnñopqrstuwxyz1234567890";
 
         public static string GenerateRandomString(int lenght)
         {
