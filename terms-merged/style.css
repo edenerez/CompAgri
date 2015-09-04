@@ -117,16 +117,16 @@ div.circle {
     position: relative;
 }
 
-.term-relations .element-container .panel-body .btn-xs.bottom-right {
-    position: absolute;
-    border-bottom-right-radius: 0;    
-    border-top-right-radius: 0;
-    border-bottom-left-radius: 0;
-    bottom:0;
-    right:0px;
-    border-bottom:none;
-    border-right:none;
-}
+    .term-relations .element-container .panel-body .btn-xs.bottom-right {
+        position: absolute;
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 0;
+        bottom: 0;
+        right: 0px;
+        border-bottom: none;
+        border-right: none;
+    }
 
 .term-relations .element-container * {
     -moz-transition: all 0.5s ease-in;
@@ -136,22 +136,29 @@ div.circle {
 }
 
 
-.term-relations .element-container.parents .panel-footer{
-    height:50px;
+.term-relations .element-container.parents .panel-footer {
+    height: 50px;
     overflow-y: hidden;
 }
 
-.term-relations .element-container.parents .panel-footer.writting{
-    overflow-y: visible;
+    .term-relations .element-container.parents .panel-footer.writting {
+        overflow-y: visible;
+    }
+
+    .term-relations .element-container.parents .panel-footer.closed {
+        height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        border: none;
+    }
+
+.upload-indicator {
+    padding: 30px 10px;
 }
 
-.term-relations .element-container.parents  .panel-footer.closed     {
-    height: 0;
-    padding-top: 0;
-    padding-bottom  : 0;
-    border: none;
+.upload {
+    padding: 15px;
 }
-
 
 @media (max-width: 970px) {
     .term-relations .element-container .panel-body {

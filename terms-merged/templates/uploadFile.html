@@ -1,9 +1,18 @@
 ﻿<h1>Upload Xml</h1>
 
-<div class="container">
-    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+<div class="container text-center upload">
     <div class="row">
-        <input type="file" file-model="myFile" id="LoginID1" />
-        <button ng-click="uploadFile()">upload</button>
+        <div class="col-lg-12">
+            <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+            <div ng-show="isUploading" class="upload-indicator">
+                <i class="fa fa-spinner fa-pulse fa-5x"></i>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <input type="file" file-model="myFile" id="LoginID1" style="display:inline" />
+            <button ng-click="uploadFile()">upload</button>
+        </div>
     </div>
 </div>

@@ -23,13 +23,16 @@
             $scope.uploadFile = function () {
                 var file = $scope.myFile;
                 if (file) {
+                    $scope.isUploading = true;
                     uploadFileServer.uploadXmlFile(file)
                         .success(function (data) {
                             $scope.myFile = "";
                             $scope.addAlert("success", "File Uploaded Successfully");
+                            $scope.isUploading = false;
                         })
                         .error(function () {
                             $scope.addAlert("danger", "Error in uploading");
+                            $scope.isUploading = false;
                         });
                 }
                 else {
